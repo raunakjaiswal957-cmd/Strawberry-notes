@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Strawberry Notes 🍓</title>
+    <!-- CSS File ko jodna -->
+    <link rel="stylesheet" href="style.css">
+    <!-- FontAwesome Icons ke liye -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <!-- Header Section -->
+    <header>
+        <div class="header-content">
+            <h1>Strawberry Notes 🍓</h1>
+            <p>Aapka Apna Digital Study Corner</p>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="container">
+        
+        <!-- Search and Filter Bar -->
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="Notes ya subject search karein...">
+            <button id="searchBtn"><i class="fas fa-search"></i></button>
+        </div>
+
+        <!-- Notes Cards Grid -->
+        <div class="notes-grid" id="notesGrid">
+            
+            <!-- Card 1 -->
+            <div class="note-card" data-title="class 10 science physics chemistry biology">
+                <div class="card-badge">Class 10</div>
+                <h3>Science Notes 🧪</h3>
+                <p>Physics, Chemistry, aur Biology ke saare important chapters aur questions.</p>
+                <button class="view-btn" onclick="openNote('Science Notes')">Open Notes</button>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="note-card" data-title="coding html css javascript programming">
+                <div class="card-badge/coding">Coding</div>
+                <h3>Web Development 💻</h3>
+                <p>HTML, CSS, aur JavaScript ke basic se lekar advanced tak ke self-made notes.</p>
+                <button class="view-btn" onclick="openNote('Coding Notes')">Open Notes</button>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="note-card" data-title="mathematics math algebra geometry formulas">
+                <div class="card-badge">Maths</div>
+                <h3>Mathematics 📐</h3>
+                <p>Saare formulas, theorems aur exam ke liye imporatnt math short-tricks.</p>
+                <button class="view-btn" onclick="openNote('Math Notes')">Open Notes</button>
+            </div>
+
+        </div>
+
+        <!-- Share Button -->
+        <button class="share-site-btn" id="shareBtnWebsite">
+            <i class="fas fa-share-alt"></i> Share Website
+        </button>
+
+    </div>
+
+    <!-- JavaScript File ko jodna -->
+    <script src="script.js"></script>
+</body>
+</html>
