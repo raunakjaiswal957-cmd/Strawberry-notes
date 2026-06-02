@@ -1,152 +1,396 @@
+            
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Strawberry Notes - Class 10 Science</title>
+    <title>Class 10 Science Notes</title>
     <style>
         :root {
-            --bg-color: #1a1a1a;
-            --card-bg: #2d2d2d;
-            --text-color: #ffffff;
-            --primary-pink: #ff4d6d;
-            --hover-pink: #ff758f;
+            --primary-color: #2c3e50;
+            --chemistry-color: #e74c3c;
+            --biology-color: #2ecc71;
+            --physics-color: #3498db;
+            --text-light: #ffffff;
+            --bg-light: #f8f9fa;
         }
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
+
+        * {
             margin: 0;
-            padding: 20px;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            color: #333;
+            line-height: 1.6;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: var(--text-light);
             text-align: center;
+            padding: 2.5rem 1rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
-        h1 {
-            color: var(--primary-pink);
+
+        header h1 {
             font-size: 2.5rem;
-            margin-bottom: 10px;
+            margin-bottom: 0.5rem;
         }
-        p {
-            color: #ccc;
-            margin-bottom: 30px;
+
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
         }
+
+        /* Search Section Styling */
+        .search-container {
+            max-width: 600px;
+            margin: -20px auto 2rem auto;
+            padding: 0 1rem;
+            position: relative;
+            z-index: 10;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 15px 20px;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+            outline: none;
+            transition: box-shadow 0.3s;
+        }
+
+        .search-input:focus {
+            box-shadow: 0 4px 20px rgba(30, 60, 114, 0.3);
+        }
+
         .container {
-            max-width: 800px;
-            margin: 0 auto;
+            max-width: 1000px;
+            margin: 0 auto 2rem auto;
+            padding: 0 1rem;
         }
-        .section-title {
-            text-align: left;
-            color: var(--hover-pink);
-            border-bottom: 2px solid var(--card-bg);
-            padding-bottom: 5px;
-            margin-top: 30px;
+
+        .subject-section {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border-left: 8px solid var(--primary-color);
+            transition: all 0.3s ease;
         }
+
+        .chemistry-sec { border-left-color: var(--chemistry-color); }
+        .biology-sec { border-left-color: var(--biology-color); }
+        .physics-sec { border-left-color: var(--physics-color); }
+
+        .subject-title {
+            font-size: 1.8rem;
+            margin-bottom: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .chemistry-sec .subject-title { color: var(--chemistry-color); }
+        .biology-sec .subject-title { color: var(--biology-color); }
+        .physics-sec .subject-title { color: var(--physics-color); }
+
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             gap: 15px;
-            margin-top: 15px;
         }
-        .card {
-            background-color: var(--card-bg);
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
-            transition: transform 0.2s;
+
+        .chapter-card {
+            background: #fdfdfd;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1.2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: transform 0.2s, box-shadow 0.2s, opacity 0.3s;
         }
-        .card:hover {
-            transform: translateY(-5px);
+
+        .chapter-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 12px rgba(0,0,0,0.1);
         }
-        .card h3 {
-            margin: 0 0 15px 0;
+
+        .chapter-num {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            font-weight: bold;
+            color: #718096;
+            margin-bottom: 0.3rem;
+        }
+
+        .chapter-name {
             font-size: 1.1rem;
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 1rem;
         }
+
         .btn {
             display: inline-block;
-            background-color: var(--primary-pink);
-            color: white;
+            text-align: center;
+            background-color: var(--primary-color);
+            color: var(--text-light);
             text-decoration: none;
-            padding: 8px 15px;
-            border-radius: 5px;
-            font-weight: bold;
+            padding: 0.6rem 1rem;
+            border-radius: 6px;
+            font-weight: 500;
+            font-size: 0.95rem;
             transition: background 0.2s;
         }
-        .btn:hover {
-            background-color: var(--hover-pink);
+
+        .chemistry-sec .btn { background-color: var(--chemistry-color); }
+        .chemistry-sec .btn:hover { background-color: #c0392b; }
+
+        .biology-sec .btn { background-color: var(--biology-color); }
+        .biology-sec .btn:hover { background-color: #27ae60; }
+
+        .physics-sec .btn { background-color: var(--physics-color); }
+        .physics-sec .btn:hover { background-color: #2980b9; }
+
+        .btn.missing {
+            background-color: #cbd5e0 !important;
+            color: #718096;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+
+        /* No Results Message */
+        #no-results {
+            text-align: center;
+            font-size: 1.2rem;
+            color: #718096;
+            margin: 3rem 0;
+            display: none;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            margin-top: 4rem;
+            color: #718096;
+            font-size: 0.9rem;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        @media (max-width: 600px) {
+            header h1 { font-size: 2rem; }
+            .subject-title { font-size: 1.5rem; }
         }
     </style>
 </head>
 <body>
 
+    <header>
+        <h1>Class 10th Science Notes</h1>
+        <p>Your ultimate destination for complete Chapterwise PDF Notes</p>
+    </header>
+
+    <!-- 🔍 Search Bar Section -->
+    <div class="search-container">
+        <input type="text" id="search-bar" class="search-input" placeholder="Search chapters (e.g., Light, Acids, Chapter 1)...">
+    </div>
+
     <div class="container">
-        <h1>🍓 Strawberry Notes</h1>
-        <p>Class 10th Science Ke Best Notes Yahan Se Download Karein</p>
+        
+        <!-- Message when no chapters match search -->
+        <div id="no-results">No chapters found matching your search.</div>
 
-        <!-- CHEMISTRY SECTION -->
-        <h2 class="section-title">🧪 Chemistry (रसायन विज्ञान)</h2>
-        <div class="grid">
-            <div class="card">
-                <h3>Ch 1: Chemical Reactions</h3>
-                <!-- Jahan '#' hai, wahan apna Google Drive ya PDF ka link daal dena -->
-                <a href="#" class="btn">Download PDF</a>
-            </div>
-            <div class="card">
-                <h3>Ch 2: Acids, Bases & Salts</h3>
-                <a href="#" class="btn">Download PDF</a>
-            </div>
-            <div class="card">
-                <h3>Ch 3: Metals & Non-Metals</h3>
-                <a href="#" class="btn">Download PDF</a>
-            </div>
-            <div class="card">
-                <h3>Ch 4: Carbon & Its Compounds</h3>
-                <a href="#" class="btn">Download PDF</a>
-            </div>
-        </div>
+        <!-- ================= CHEMISTRY SECTION ================= -->
+        <section class="subject-section chemistry-sec">
+            <div class="subject-title">🧪 Chemistry</div>
+            <div class="grid">
+                
+                <div class="chapter-card">
+                    <div>
+                        <div class="chapter-num">Chapter 1</div>
+                        <div class="chapter-name">Chemical Reactions and Equations</div>
+                    </div>
+                    <a href="https://drive.google.com/file/d/13XgfTzSRsAx8vPUKV5EkzXEofZ5LbOiX/view?usp=drivesdk" target="_blank" class="btn">View Notes</a>
+                </div>
 
-        <!-- BIOLOGY SECTION -->
-        <h2 class="section-title">🧬 Biology (जीव विज्ञान)</h2>
-        <div class="grid">
-            <div class="card">
-                <h3>Ch 5: Life Processes</h3>
-                <a href="#" class="btn">Download PDF</a>
-            </div>
-            <div class="card">
-                <h3>Ch 6: Control & Coordination</h3>
-                <a href="#" class="btn">Download PDF</a>
-            </div>
-            <div class="card">
-                <h3>Ch 7: How do Organisms Reproduce?</h3>
-                <a href="#" class="btn">Download PDF</a>
-            </div>
-            <div class="card">
-                <h3>Ch 8: Heredity</h3>
-                <a href="#" class="btn">Download PDF</a>
-            </div>
-        </div>
+                <div class="chapter-card">
+                    <div>
+                        <div class="chapter-num">Chapter 2</div>
+                        <div class="chapter-name">Acids, Bases and Salts</div>
+                    </div>
+                    <a href="https://drive.google.com/file/d/1v99-dRtBZ6jQUIyDoZnWIUS-3A6V2P7O/view?usp=drivesdk" target="_blank" class="btn">View Notes</a>
+                </div>
 
-        <!-- PHYSICS SECTION -->
-        <h2 class="section-title">⚡ Physics (भौतिक विज्ञान)</h2>
-        <div class="grid">
-            <div class="card">
-                <h3>Ch 9: Light - Reflection & Refraction</h3>
-                <a href="#" class="btn">Download PDF</a>
+                <div class="chapter-card">
+                    <div>
+                        <div class="chapter-num">Chapter 3</div>
+                        <div class="chapter-name">Metals and Non-metals</div>
+                    </div>
+                    <a href="https://drive.google.com/file/d/1z-p-uRin8MzyNAv2BDMLre4MZ8OMB-jE/view?usp=drivesdk" target="_blank" class="btn">View Notes</a>
+                </div>
+
+                <div class="chapter-card">
+                    <div>
+                        <div class="chapter-num">Chapter 4</div>
+                        <div class="chapter-name">Carbon and its Compounds</div>
+                    </div>
+                    <a href="https://drive.google.com/file/d/1Hh3b7CVzh6PHFPSS0Gv2UtrGDCOCkcos/view?usp=drivesdk" target="_blank" class="btn">View Notes</a>
+                </div>
+
             </div>
-            <div class="card">
-                <h3>Ch 10: Human Eye & Colorful World</h3>
-                <a href="#" class="btn">Download PDF</a>
+        </section>
+
+
+        <!-- ================= BIOLOGY SECTION ================= -->
+        <section class="subject-section biology-sec">
+            <div class="subject-title">🧬 Biology</div>
+            <div class="grid">
+
+                <div class="chapter-card">
+                    <div>
+                        <div class="chapter-num">Chapter 5</div>
+                        <div class="chapter-name">Life Processes</div>
+                    </div>
+                    <a href="https://drive.google.com/file/d/1jm8CplhaD0XUMiRBtarDpSII4PaH4y-Z/view?usp=drivesdk" target="_blank" class="btn">View Notes</a>
+                </div>
+
+                <div class="chapter-card">
+                    <div>
+                        <div class="chapter-num">Chapter 6</div>
+                        <div class="chapter-name">Control and Coordination</div>
+                    </div>
+                    <a href="https://drive.google.com/file/d/1wdQuOWRVE5fElUbXRLhma468wldqjYzg/view?usp=drivesdk" target="_blank" class="btn">View Notes</a>
+                </div>
+
+                <div class="chapter-card">
+                    <div>
+                        <div class="chapter-num">Chapter 7</div>
+                        <div class="chapter-name">How do Organisms Reproduce?</div>
+                    </div>
+                    <a href="https://drive.google.com/file/d/1lE-vjSHdAP4iNFns32Kj6brGKewdHLlT/view?usp=drivesdk" target="_blank" class="btn">View Notes</a>
+                </div>
+
+                <div class="chapter-card">
+                    <div>
+                        <div class="chapter-num">Chapter 8</div>
+                        <div class="chapter-name">Heredity</div>
+                    </div>
+                    <a href="#" class="btn missing">Link Coming Soon</a>
+                </div>
+
+                <div class="chapter-card">
+                    <div>
+                        <div class="chapter-num">Chapter 13</div>
+                        <div class="chapter-name">Our Environment</div>
+                    </div>
+                    <a href="https://drive.google.com/file/d/1Do9K685j_NPL45GYLNOwILSewjd8Ym2b/view?usp=drivesdk" target="_blank" class="btn">View Notes</a>
+                </div>
+
             </div>
-            <div class="card">
-                <h3>Ch 11: Electricity</h3>
-                <a href="#" class="btn">Download PDF</a>
+        </section>
+
+
+        <!-- ================= PHYSICS SECTION ================= -->
+        <section class="subject-section physics-sec">
+            <div class="subject-title">⚡ Physics</div>
+            <div class="grid">
+
+                <div class="chapter-card">
+                    <div>
+                        <div class="chapter-num">Chapter 9</div>
+                        <div class="chapter-name">Light – Reflection & Refraction</div>
+                    </div>
+                    <a href="https://drive.google.com/file/d/1-TvtEkydIHngAPDbne8SrJrnMtKzv6bv/view?usp=drivesdk" target="_blank" class="btn">View Notes</a>
+                </div>
+
+                <div class="chapter-card">
+                    <div>
+                        <div class="chapter-num">Chapter 10</div>
+                        <div class="chapter-name">Human Eye & Colorful World</div>
+                    </div>
+                    <a href="https://drive.google.com/file/d/19MSOfQDlmbvnfWR-y-4UyfBJM7on9JC4/view?usp=drivesdk" target="_blank" class="btn">View Notes</a>
+                </div>
+
+                <div class="chapter-card">
+                    <div>
+                        <div class="chapter-num">Chapter 11</div>
+                        <div class="chapter-name">Electricity</div>
+                    </div>
+                    <a href="https://drive.google.com/file/d/1pCsz6nC_LwVj-X_6vR7N8bM_ZpQ8Kcos/view?usp=drivesdk" target="_blank" class="btn">View Notes</a>
+                </div>
+
+                <div class="chapter-card">
+                    <div>
+                        <div class="chapter-num">Chapter 12</div>
+                        <div class="chapter-name">Magnetic Effects of Current</div>
+                    </div>
+                    <a href="#" class="btn missing">Link Coming Soon</a>
+                </div>
+
             </div>
-            <div class="card">
-                <h3>Ch 12: Magnetic Effects of Current</h3>
-                <a href="#" class="btn">Download PDF</a>
-            </div>
-        </div>
+        </section>
 
     </div>
 
-</body>
-</html>
+    <footer>
+        <p>&copy; 2026 Class 10th Science Hub. Built for Students.</p>
+    </footer>
 
+    <!-- 🧠 JavaScript Filter Logic -->
+    <script>
+        const searchBar = document.getElementById('search-bar');
+        const cards = document.querySelectorAll('.chapter-card');
+        const sections = document.querySelectorAll('.subject-section');
+        const noResults = document.getElementById('no-results');
+
+        searchBar.addEventListener('input', (e) => {
+            const searchText = e.target.value.toLowerCase().trim();
+            let totalVisibleCards = 0;
+
+            sections.forEach(section => {
+                const sectionCards = section.querySelectorAll('.chapter-card');
+                let visibleCardsInSection = 0;
+
+                sectionCards.forEach(card => {
+                    const chapterNum = card.querySelector('.chapter-num').innerText.toLowerCase();
+                    const chapterName = card.querySelector('.chapter-name').innerText.toLowerCase();
+
+                    // Check if search matches chapter number or name
+                    if (chapterNum.includes(searchText) || chapterName.includes(searchText)) {
+                        card.style.display = 'flex';
+                        visibleCardsInSection++;
+                        totalVisibleCards++;
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+
+                // If no cards are visible in a section, hide the whole section title/box
+                if (visibleCardsInSection === 0 && searchText !== '') {
+                    section.style.display = 'none';
+                } else {
+                    section.style.display = 'block';
+                }
+            });
+
+            // Show "No Results" message if everything is hidden
+            if (totalVisibleCards === 0 && searchText !== '') {
+                noResults.style.display = 'block';
+            } else {
+                noResults.style.display = 'none';
+            }
+        });
+    </script>
+
+</body>
+                        </html>
+                            
