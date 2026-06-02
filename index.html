@@ -1,327 +1,36 @@
-   <!DOCTYPE html>
-<html lang="hi">
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Class 10th Science Notes</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        body {
-            background-color: #f4f7f6;
-            color: #333;
-            padding: 20px;
-        }
-
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            background: #ffffff;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-        }
-
-        h1 {
-            text-align: center;
-            margin-bottom: 10px;
-            color: #2c3e50;
-        }
-
-        p.subtitle {
-            text-align: center;
-            color: #7f8c8d;
-            margin-bottom: 25px;
-        }
-
-        /* Search Bar Styling */
-        .search-box {
-            position: relative;
-            max-width: 500px;
-            margin: 0 auto 35px auto;
-        }
-
-        .search-box input {
-            width: 100%;
-            padding: 15px 20px;
-            font-size: 16px;
-            border: 2px solid #ddd;
-            border-radius: 30px;
-            outline: none;
-            transition: all 0.3s ease;
-        }
-
-        .search-box input:focus {
-            border-color: #3498db;
-            box-shadow: 0 0 8px rgba(52, 152, 219, 0.2);
-        }
-
-        /* Chapter Sections Styling */
-        .unit-title {
-            font-size: 20px;
-            color: #2c3e50;
-            margin: 25px 0 15px 0;
-            padding-bottom: 5px;
-            border-bottom: 2px solid #3498db;
-        }
-
-        .chapters-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 15px;
-        }
-
-        @media (min-width: 600px) {
-            .chapters-grid {
-                grid-template-columns: 1fr 1fr;
-            }
-        }
-
-        .chapter-card {
-            background: #fafafa;
-            border: 1px solid #e0e0e0;
-            border-radius: 8px;
-            padding: 15px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-
-        .chapter-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-        }
-
-        .chapter-info h3 {
-            font-size: 16px;
-            color: #34495e;
-            margin-bottom: 5px;
-        }
-
-        .chapter-info p {
-            font-size: 13px;
-            color: #7f8c8d;
-            margin-bottom: 15px;
-        }
-
-        .btn {
-            display: inline-block;
-            text-align: center;
-            background-color: #3498db;
-            color: white;
-            text-decoration: none;
-            padding: 10px 15px;
-            border-radius: 6px;
-            font-weight: 600;
-            font-size: 14px;
-            transition: background 0.2s;
-        }
-
-        .btn:hover {
-            background-color: #2980b9;
-        }
-
-        /* No results text */
-        #no-results {
-            display: none;
-            text-align: center;
-            color: #e74c3c;
-            font-weight: bold;
-            margin-top: 20px;
-        }
-    </style>
+    <title>My Notes Sharing App</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<div class="container">
-    <h1>Class 10th Science Notes 📚</h1>
-    <p class="subtitle">Apne pasand ka chapter search karein aur padhna shuru karein!</p>
+    <header>
+        <h1>📝 Notes Share Network</h1>
+        <p>Apne notes upload karein aur dosto ke sath share karein!</p>
+    </header>
 
-    <div class="search-box">
-        <input type="text" id="search-input" placeholder="Chapter ka naam ya number search karein..." onkeyup="searchChapters()">
-    </div>
+    <main>
+        <section class="form-section">
+            <h2>Naya Note Daalein</h2>
+            <form id="notesForm">
+                <input type="text" id="noteTitle" placeholder="Subject / Topic ka naam" required>
+                <textarea id="noteDesc" placeholder="Note ke baare me thoda batayein..." rows="3" required></textarea>
+                <input type="url" id="noteLink" placeholder="Google Drive ya PDF ka Link (https://...)" required>
+                <button type="submit">Add Note</button>
+            </form>
+        </section>
 
-    <div class="unit-section" id="chem-section">
-        <div class="unit-title">Chemistry (रसायन विज्ञान)</div>
-        <div class="chapters-grid">
-            <div class="chapter-card" data-name="chapter 1 chemical reactions and equations rasayanik abhikriyae evam samikaran">
-                <div class="chapter-info">
-                    <h3>Chapter 1</h3>
-                    <p>Chemical Reactions and Equations</p>
+        <section class="notes-section">
+            <h2>Saare Notes</h2>
+            <div id="notesContainer" class="notes-grid">
                 </div>
-                <a href="https://drive.google.com/file/d/13XgfTzSRsAx8vPUKV5EkzXEofZ5LbOiX/view?usp=drivesdk" target="_blank" class="btn">View Notes</a>
-            </div>
+        </section>
+    </main>
 
-            <div class="chapter-card" data-name="chapter 2 acids bases and salts aml kshar evam lavan">
-                <div class="chapter-info">
-                    <h3>Chapter 2</h3>
-                    <p>Acids, Bases and Salts</p>
-                </div>
-                <a href="https://drive.google.com/file/d/1z-p-uRin8MzyNAv2BDMLre4MZ8OMB-jE/view?usp=drivesdk" target="_blank" class="btn">View Notes</a>
-            </div>
-
-            <div class="chapter-card" data-name="chapter 3 metals and non metals dhatu aur adhatu">
-                <div class="chapter-info">
-                    <h3>Chapter 3</h3>
-                    <p>Metals and Non-metals</p>
-                </div>
-                <a href="https://drive.google.com/file/d/1H1k9ONOvokLwSpqQYxgRWeKJgu123HrU/view?usp=drivesdk" target="_blank" class="btn">View Notes</a>
-            </div>
-
-            <div class="chapter-card" data-name="chapter 4 carbon and its compounds carbon aur uske yogik">
-                <div class="chapter-info">
-                    <h3>Chapter 4</h3>
-                    <p>Carbon and its Compounds</p>
-                </div>
-                <a href="https://drive.google.com/file/d/1lE-vjSHdAP4iNFns32Kj6brGKewdHLlT/view?usp=drivesdk" target="_blank" class="btn">View Notes</a>
-            </div>
-        </div>
-    </div>
-
-    <div class="unit-section" id="bio-section">
-        <div class="unit-title">Biology (जीव विज्ञान)</div>
-        <div class="chapters-grid">
-            <div class="chapter-card" data-name="chapter 5 life processes jaiv prakram">
-                <div class="chapter-info">
-                    <h3>Chapter 5</h3>
-                    <p>Life Processes</p>
-                </div>
-                <a href="https://drive.google.com/file/d/1wdQuOWRVE5fElUbXRLhma468wldqjYzg/view?usp=drivesdk" target="_blank" class="btn">View Notes</a>
-            </div>
-
-            <div class="chapter-card" data-name="chapter 6 control and coordination niyantran evam samnvay">
-                <div class="chapter-info">
-                    <h3>Chapter 6</h3>
-                    <p>Control and Coordination</p>
-                </div>
-                <a href="https://drive.google.com/file/d/1jm8CplhaD0XUMiRBtarDpSII4PaH4y-Z/view?usp=drivesdk" target="_blank" class="btn">View Notes</a>
-            </div>
-
-            <div class="chapter-card" data-name="chapter 7 how do organisms reproduce jeev janan kaise karte hain">
-                <div class="chapter-info">
-                    <h3>Chapter 7</h3>
-                    <p>How do Organisms Reproduce?</p>
-                </div>
-                <a href="https://drive.google.com/file/d/1v99-dRtBZ6jQUIyDoZnWIUS-3A6V2P7O/view?usp=drivesdk" target="_blank" class="btn">View Notes</a>
-            </div>
-
-            <div class="chapter-card" data-name="chapter 8 heredity anuvanshikta">
-                <div class="chapter-info">
-                    <h3>Chapter 8</h3>
-                    <p>Heredity</p>
-                </div>
-                <a href="https://drive.google.com/file/d/1Hh3b7CVzh6PHFPSS0Gv2UtrGDCOCkcos/view?usp=drivesdk" target="_blank" class="btn">View Notes</a>
-            </div>
-        </div>
-    </div>
-
-    <div class="unit-section" id="phy-section">
-        <div class="unit-title">Physics (भौतिक विज्ञान)</div>
-        <div class="chapters-grid">
-            <div class="chapter-card" data-name="chapter 9 light reflection and refraction prakash paravartan tatha apavartan">
-                <div class="chapter-info">
-                    <h3>Chapter 9</h3>
-                    <p>Light – Reflection and Refraction</p>
-                </div>
-                <a href="https://drive.google.com/file/d/1tNSo_emyq8LYvKjVS3gyrxhXDmk1_tO0/view?usp=drivesdk" target="_blank" class="btn">View Notes</a>
-            </div>
-
-            <div class="chapter-card" data-name="chapter 10 human eye and colorful world manav netra tatha rangbiranga sansar">
-                <div class="chapter-info">
-                    <h3>Chapter 10</h3>
-                    <p>Human Eye and Colorful World</p>
-                </div>
-                <a href="https://drive.google.com/file/d/1v99-dRtBZ6jQUIyDoZnWIUS-3A6V2P7O/view?usp=drivesdk" target="_blank" class="btn">View Notes</a>
-            </div>
-
-            <div class="chapter-card" data-name="chapter 11 electricity vidyut">
-                <div class="chapter-info">
-                    <h3>Chapter 11</h3>
-                    <p>Electricity</p>
-                </div>
-                <a href="https://drive.google.com/file/d/1Do9K685j_NPL45GYLNOwILSewjd8Ym2b/view?usp=drivesdk" target="_blank" class="btn">View Notes</a>
-            </div>
-
-            <div class="chapter-card" data-name="chapter 12 magnetic effects of current vidyut dhara ke chumbakiya prabhav">
-                <div class="chapter-info">
-                    <h3>Chapter 12</h3>
-                    <p>Magnetic Effects of Current</p>
-                </div>
-                <a href="https://drive.google.com/file/d/19j5_4Iu5JL4X2a_3UD0kUgPsYjT3ZZ6h/view?usp=drivesdk" target="_blank" class="btn">View Notes</a>
-            </div>
-        </div>
-    </div>
-
-    <div class="unit-section" id="env-section">
-        <div class="unit-title">Environment (पर्यावरण)</div>
-        <div class="chapters-grid">
-            <div class="chapter-card" data-name="chapter 13 our environment hamara paryavaran">
-                <div class="chapter-info">
-                    <h3>Chapter 13</h3>
-                    <p>Our Environment</p>
-                </div>
-                <a href="https://drive.google.com/file/d/1-TvtEkydIHngAPDbne8SrJrnMtKzv6bv/view?usp=drivesdk" target="_blank" class="btn">View Notes</a>
-            </div>
-        </div>
-    </div>
-
-    <div id="no-results">Kuch nahi mila! Sahi chapter number ya naam search karein.</div>
-</div>
-
-<script>
-    function searchChapters() {
-        let input = document.getElementById('search-input').value.toLowerCase().trim();
-        let cards = document.getElementsByClassName('chapter-card');
-        let sections = document.getElementsByClassName('unit-section');
-        let totalVisible = 0;
-
-        // Loop through all chapter cards
-        for (let i = 0; i < cards.length; i++) {
-            let nameData = cards[i].getAttribute('data-name');
-            
-            if (nameData.includes(input)) {
-                cards[i].style.display = "flex";
-                totalVisible++;
-            } else {
-                cards[i].style.display = "none";
-            }
-        }
-
-        // Hide or show whole sections depending on if they have visible cards
-        for (let j = 0; j < sections.length; j++) {
-            let sectionCards = sections[j].getElementsByClassName('chapter-card');
-            let sectionHasVisibleCard = false;
-            
-            for (let k = 0; k < sectionCards.length; k++) {
-                if (sectionCards[k].style.display !== "none") {
-                    sectionHasVisibleCard = true;
-                    break;
-                }
-            }
-            
-            if (sectionHasVisibleCard) {
-                sections[j].style.display = "block";
-            } else {
-                sections[j].style.display = "none";
-            }
-        }
-
-        // Show "No Results" message if nothing is found
-        let noResults = document.getElementById('no-results');
-        if (totalVisible === 0) {
-            noResults.style.display = "block";
-        } else {
-            noResults.style.display = "none";
-        }
-    }
-</script>
-
+    <script src="script.js"></script>
 </body>
-                        </html>
-                        
+</html>
