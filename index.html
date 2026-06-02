@@ -3,68 +3,150 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Strawberry Notes 🍓</title>
-    <!-- CSS File ko jodna -->
-    <link rel="stylesheet" href="style.css">
-    <!-- FontAwesome Icons ke liye -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Strawberry Notes - Class 10 Science</title>
+    <style>
+        :root {
+            --bg-color: #1a1a1a;
+            --card-bg: #2d2d2d;
+            --text-color: #ffffff;
+            --primary-pink: #ff4d6d;
+            --hover-pink: #ff758f;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+        h1 {
+            color: var(--primary-pink);
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        p {
+            color: #ccc;
+            margin-bottom: 30px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .section-title {
+            text-align: left;
+            color: var(--hover-pink);
+            border-bottom: 2px solid var(--card-bg);
+            padding-bottom: 5px;
+            margin-top: 30px;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        .card {
+            background-color: var(--card-bg);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            transition: transform 0.2s;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        .card h3 {
+            margin: 0 0 15px 0;
+            font-size: 1.1rem;
+        }
+        .btn {
+            display: inline-block;
+            background-color: var(--primary-pink);
+            color: white;
+            text-decoration: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background 0.2s;
+        }
+        .btn:hover {
+            background-color: var(--hover-pink);
+        }
+    </style>
 </head>
 <body>
 
-    <!-- Header Section -->
-    <header>
-        <div class="header-content">
-            <h1>Strawberry Notes 🍓</h1>
-            <p>Aapka Apna Digital Study Corner</p>
-        </div>
-    </header>
-
-    <!-- Main Container -->
     <div class="container">
-        
-        <!-- Search and Filter Bar -->
-        <div class="search-box">
-            <input type="text" id="searchInput" placeholder="Notes ya subject search karein...">
-            <button id="searchBtn"><i class="fas fa-search"></i></button>
+        <h1>🍓 Strawberry Notes</h1>
+        <p>Class 10th Science Ke Best Notes Yahan Se Download Karein</p>
+
+        <!-- CHEMISTRY SECTION -->
+        <h2 class="section-title">🧪 Chemistry (रसायन विज्ञान)</h2>
+        <div class="grid">
+            <div class="card">
+                <h3>Ch 1: Chemical Reactions</h3>
+                <!-- Jahan '#' hai, wahan apna Google Drive ya PDF ka link daal dena -->
+                <a href="#" class="btn">Download PDF</a>
+            </div>
+            <div class="card">
+                <h3>Ch 2: Acids, Bases & Salts</h3>
+                <a href="#" class="btn">Download PDF</a>
+            </div>
+            <div class="card">
+                <h3>Ch 3: Metals & Non-Metals</h3>
+                <a href="#" class="btn">Download PDF</a>
+            </div>
+            <div class="card">
+                <h3>Ch 4: Carbon & Its Compounds</h3>
+                <a href="#" class="btn">Download PDF</a>
+            </div>
         </div>
 
-        <!-- Notes Cards Grid -->
-        <div class="notes-grid" id="notesGrid">
-            
-            <!-- Card 1 -->
-            <div class="note-card" data-title="class 10 science physics chemistry biology">
-                <div class="card-badge">Class 10</div>
-                <h3>Science Notes 🧪</h3>
-                <p>Physics, Chemistry, aur Biology ke saare important chapters aur questions.</p>
-                <button class="view-btn" onclick="openNote('Science Notes')">Open Notes</button>
+        <!-- BIOLOGY SECTION -->
+        <h2 class="section-title">🧬 Biology (जीव विज्ञान)</h2>
+        <div class="grid">
+            <div class="card">
+                <h3>Ch 5: Life Processes</h3>
+                <a href="#" class="btn">Download PDF</a>
             </div>
-
-            <!-- Card 2 -->
-            <div class="note-card" data-title="coding html css javascript programming">
-                <div class="card-badge/coding">Coding</div>
-                <h3>Web Development 💻</h3>
-                <p>HTML, CSS, aur JavaScript ke basic se lekar advanced tak ke self-made notes.</p>
-                <button class="view-btn" onclick="openNote('Coding Notes')">Open Notes</button>
+            <div class="card">
+                <h3>Ch 6: Control & Coordination</h3>
+                <a href="#" class="btn">Download PDF</a>
             </div>
-
-            <!-- Card 3 -->
-            <div class="note-card" data-title="mathematics math algebra geometry formulas">
-                <div class="card-badge">Maths</div>
-                <h3>Mathematics 📐</h3>
-                <p>Saare formulas, theorems aur exam ke liye imporatnt math short-tricks.</p>
-                <button class="view-btn" onclick="openNote('Math Notes')">Open Notes</button>
+            <div class="card">
+                <h3>Ch 7: How do Organisms Reproduce?</h3>
+                <a href="#" class="btn">Download PDF</a>
             </div>
-
+            <div class="card">
+                <h3>Ch 8: Heredity</h3>
+                <a href="#" class="btn">Download PDF</a>
+            </div>
         </div>
 
-        <!-- Share Button -->
-        <button class="share-site-btn" id="shareBtnWebsite">
-            <i class="fas fa-share-alt"></i> Share Website
-        </button>
+        <!-- PHYSICS SECTION -->
+        <h2 class="section-title">⚡ Physics (भौतिक विज्ञान)</h2>
+        <div class="grid">
+            <div class="card">
+                <h3>Ch 9: Light - Reflection & Refraction</h3>
+                <a href="#" class="btn">Download PDF</a>
+            </div>
+            <div class="card">
+                <h3>Ch 10: Human Eye & Colorful World</h3>
+                <a href="#" class="btn">Download PDF</a>
+            </div>
+            <div class="card">
+                <h3>Ch 11: Electricity</h3>
+                <a href="#" class="btn">Download PDF</a>
+            </div>
+            <div class="card">
+                <h3>Ch 12: Magnetic Effects of Current</h3>
+                <a href="#" class="btn">Download PDF</a>
+            </div>
+        </div>
 
     </div>
 
-    <!-- JavaScript File ko jodna -->
-    <script src="script.js"></script>
 </body>
 </html>
+
