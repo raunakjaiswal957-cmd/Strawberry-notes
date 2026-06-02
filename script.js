@@ -1,36 +1,26 @@
-// Search Feature Code
-document.getElementById('searchInput').addEventListener('input', function(e) {
-    let searchTerm = e.target.value.toLowerCase();
-    let cards = document.querySelectorAll('.note-card');
+document.getElementById('notesForm').addEventListener('submit', function(e) {
+    e.preventDefault(); // Page reload hone se rokne ke liye
 
-    cards.forEach(card => {
-        let titleData = card.getAttribute('data-title');
-        if(titleData.includes(searchTerm)) {
-            card.style.display = "block";
-        } else {
-            card.style.display = "none";
-        }
-    });
-});
+    // Input fields se data nikalna
+    const title = document.getElementById('noteTitle').value;
+    const desc = document.getElementById('noteDesc').value;
+    const link = document.getElementById('noteLink').value;
 
-// Card Click Alert Function
-function openNote(noteName) {
-    alert("🎉 Aapka '" + noteName + "' khul raha hai! (Aap yahan apna pdf link ya naya page jodh sakte hain)");
-}
+    // Naya Note Card HTML taiyar karna
+    const notesContainer = document.getElementById('notesContainer');
+    
+    const noteCard = document.createElement('div');
+    noteCard.classList.add('note-card');
 
-// Share Button Feature (Apne dosto ko link bejhne ke liye)
-document.getElementById('shareBtnWebsite').addEventListener('click', function() {
-    if (navigator.share) {
-        navigator.share({
-            title: 'Strawberry Notes 🍓',
-            text: 'Bhai, meri personal notes website check kar!',
-            url: window.location.href
-        }).then(() => {
-            console.log('Successfully shared');
-        }).catch((error) => {
-            console.log('Error sharing:', error);
-        });
-    } else {
-        alert("Aapki website ka link copy ho gaya hai! Kahi bhi share karein: " + window.location.href);
-    }
+    noteCard.innerHTML = `
+        <h3>${title}</h3>
+        <p>${desc}</p>
+        <a href="${link}" target="_blank" class="download-btn">View / Download Note</a>
+    `;
+
+    // Card ko container me jodna
+    notesContainer.appendChild(noteCard);
+
+    // Form ko wapas khaali (reset) karna
+    document.getElementById('notesForm').reset();
 });
