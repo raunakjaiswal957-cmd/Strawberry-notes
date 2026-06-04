@@ -6,32 +6,51 @@
     <title>My Study Notes App</title>
     <style>
         body { font-family: Arial, sans-serif; margin: 0; padding: 20px; background: #f4f4f9; color: #333; }
-        h1 { text-align: center; color: #4A90E2; }
-        .category { background: white; padding: 15px; margin-bottom: 15px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        .category h2 { margin-top: 0; color: #333; border-bottom: 2px solid #4A90E2; padding-bottom: 5px; }
+        h1 { text-align: center; color: #4A90E2; display: flex; align-items: center; justify-content: center; gap: 10px; }
+        .category { background: white; padding: 20px; margin-bottom: 20px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+        .category h2 { margin-top: 0; color: #333; border-bottom: 2px solid #4A90E2; padding-bottom: 8px; display: flex; align-items: center; gap: 8px; }
         ul { padding-left: 20px; }
-        li { margin-bottom: 8px; line-height: 1.5; }
+        li { margin-bottom: 12px; line-height: 1.6; font-size: 16px; }
+        code { background: #eee; padding: 2px 6px; border-radius: 4px; font-family: monospace; }
     </style>
 </head>
 <body>
 
     <h1>📚 My Study Notes</h1>
 
+    <!-- 1. SCIENCE SECTION -->
     <div class="category">
         <h2>🔬 Science Notes</h2>
         <ul>
-            <li><b>Photosynthesis:</b> Plants use sunlight, water, and CO2 to make food (Glucose).</li>
-            <li><b>Newton's 1st Law:</b> An object will remain at rest unless acted upon by an external force.</li>
+            <li><b>Photosynthesis:</b> Plants use sunlight, water, and CO2 to make food (Glucose) and release Oxygen.</li>
+            <li><b>Newton's 1st Law:</b> An object will remain at rest or in uniform motion unless acted upon by an external force (Law of Inertia).</li>
+            <li><b>Water Formula:</b> The chemical formula for water is H2O, consisting of two Hydrogen atoms and one Oxygen atom.</li>
+            <li><b>Acid & Base:</b> Acids taste sour and turn blue litmus red (pH < 7). Bases taste bitter and turn red litmus blue (pH > 7).</li>
         </ul>
     </div>
 
+    <!-- 2. MATHS SECTION -->
     <div class="category">
         <h2>📐 Maths Formulas</h2>
         <ul>
-            <li><b>Area of Circle:</b> A = &pi;r&sup2;</li>
-            <li><b>Algebra:</b> (a + b)&sup2; = a&sup2; + 2ab + b&sup2;</li>
+            <li><b>Area of Circle:</b> A = &pi;r&sup2; (where r is the radius of the circle).</li>
+            <li><b>Algebra Identity:</b> (a + b)&sup2; = a&sup2; + 2ab + b&sup2;</li>
+            <li><b>Algebra Identity 2:</b> (a - b)&sup2; = a&sup2; - 2ab + b&sup2;</li>
+            <li><b>Pythagoras Theorem:</b> Hypotenuse&sup2; = Base&sup2; + Perpendicular&sup2; (a&sup2; + b&sup2; = c&sup2; for right-angled triangles).</li>
+        </ul>
+    </div>
+
+    <!-- 3. CODING SECTION -->
+    <div class="category">
+        <h2>💻 Coding & Web Dev</h2>
+        <ul>
+            <li><b>HTML Structure:</b> HyperText Markup Language is the backbone of any website. It uses tags like <code>&lt;div&gt;</code>, <code>&lt;p&gt;</code>, and <code>&lt;h1&gt;</code>.</li>
+            <li><b>CSS Styling:</b> Cascading Style Sheets are used to change colors, fonts, layouts, and make websites look beautiful.</li>
+            <li><b>JavaScript Variables:</b> Used to store data. We can declare them using <code>let</code> (changeable) or <code>const</code> (fixed/constant).</li>
+            <li><b>Functions:</b> A block of code designed to perform a particular task, executed when "something" invokes/calls it.</li>
         </ul>
     </div>
 
 </body>
-</html>
+                                                                                               </html>
+                                                                                               
