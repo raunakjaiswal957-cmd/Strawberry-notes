@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Strawberry Notes Hub 🍓</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Arial, sans-serif; }
+        body { background-color: #fff5f5; color: #4a1525; padding: 10px; min-height: 100vh; display: flex; align-items: center; justify-content: center; }
+        
+        .app-container { max-width: 480px; width: 100%; background: white; padding: 20px; border-radius: 20px; box-shadow: 0 10px 25px rgba(219, 39, 119, 0.1); border: 2px solid #fbcfe8; }
+        
+        /* AUTHENTICATION STYLES */
+        .auth-box { display: block; text-align: center; }
+        .auth-logo { font-size: 50px; margin-bottom: 10px; }
+        .auth-box h2 { font-size: 24px; margin-bottom: 5px; color: #9d174d; }
+        .auth-box p { font-size: 13px; color: #701a34; margin-bottom: 20px; }
+        .input-group { text-align: left; margin-bottom: 15px; }
+        .input-group label { display: block; font-size: 13px; font-weight: bold; margin-bottom: 5px; color: #9d174d; }
+        .input-group input { width: 100%; padding: 12px; border: 2px solid #fbcfe8; border-radius: 10px; font-size: 14px; outline: none; }
+        .input-group input:focus { border-color: #db2777; }
+        .auth-btn { width: 100%; background: linear-gradient(135deg, #f472b6, #db2777); color: white; border: none; padding: 13px; border-radius: 10px; font-size: 15px; font-weight: bold; cursor: pointer; margin-top: 10px; }
+        .switch-text { font-size: 13px; margin-top: 15px; color: #701a34; }
+        .switch-link { color: #db2777; font-weight: bold; cursor: pointer; text-decoration: underline; }
+
+        /* DASHBOARD STYLES */
+        .dashboard-menu { display: none; }
+        .profile-card { background: linear-gradient(135deg, #db2777, #9d174d, #4c0519); color: white; padding: 20px 15px; border-radius: 16px; margin-bottom: 20px; text-align: center; position: relative; }
+        .avatar { width: 60px; height: 60px; background: #fdf2f8; border-radius: 50%; margin: 0 auto 10px auto; display: flex; align-items: center; justify-content: center; font-size: 28px; border: 2px solid white; }
+        .profile-card h2 { font-size: 20px; margin-bottom: 4px; font-weight: 700; }
+        .profile-card p { font-size: 12px; opacity: 0.9; }
+        .logout-btn { position: absolute; right: 12px; top: 12px; background: rgba(255,255,255,0.2); border: none; color: white; padding: 4px 8px; border-radius: 6px; font-size: 11px; font-weight: bold; cursor: pointer; }
+
+        .menu-heading { font-size: 14px; font-weight: bold; color: #db2777; margin: 15px 0 8px 5px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .menu-btn { display: block; width: 100%; background: #fff; color: #9d174d; border: 2px solid #f472b6; padding: 12px; margin-bottom: 10px; border-radius: 12px; font-size: 15px; font-weight: bold; cursor: pointer; text-align: left; padding-left: 15px; }
+        .menu-btn:hover { color: white; background: linear-gradient(135deg, #f472b6, #db2777); border-color: #db2777; }
+        .clear-btn { display: block; width: 100%; background: #be123c; color: white; border: none; padding: 12px; margin-top: 25px; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 13px; }
+
+        /* SUB-PAGES & ACCORDIONS */
+        .sub-page { display: none; width: 100%; }
+        .header-bar { background: linear-gradient(135deg, #be123c, #4c0519); color: white; padding: 14px; border-radius: 12px; text-align: center; margin-bottom: 15px; position: relative; }
+        .back-btn { position: absolute; left: 10px; top: 12px; color: white; background: rgba(0,0,0,0.2); border: none; padding: 5px 10px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 12px; }
+        
+        .tag-banner { background: #db2777; color: white; padding: 8px 12px; font-size: 13px; font-weight: bold; border-radius: 8px; margin: 15px 0 10px 0; }
+        .row-box { background: #fff; border: 1px solid #fbcfe8; border-left: 5px solid #be123c; border-radius: 8px; margin-bottom: 8px; padding: 12px; }
+        .row-title { font-size: 14px; font-weight: 600; cursor: pointer; display: flex; justify-content: space-between; align-items: center; color: #4c0519; }
+        .row-body { display: none; padding-top: 10px; border-top: 1px dashed #fbcfe8; margin-top: 10px; font-size: 13px; color: #4a5568; line-height: 1.6; }
+        .row-body ul { margin-left: 18px; margin-top: 5px; }
+        
+        .opened .row-body { display: block; }
+        .icon-state::after { content: '🍓'; font-size: 12px; }
+        .opened .icon-state::after { content: '❌'; font-size: 10px; }
+        
+        .formula { background: #fff1f2; border-left: 3px solid #db2777; padding: 8px; font-family: monospace; margin: 8px 0; font-weight: bold; color: #b91c1c; font-size: 12px; }
+        .code-box { background: #2d1a1e; color: #f9a8d4; padding: 10px; font-family: monospace; margin: 8px 0; border-radius: 6px; white-space: pre-wrap; font-size: 12px; border-left: 3px solid #f472b6; }
+    </style>
+</head>
+<body>
+
+<div class="app-container">
+
+    <div id="loginScreen" class="auth-box">
+        <div class="auth-logo">🍓</div>
+        <h2>Welcome Back</h2>
+        <p>Login to access your Strawberry Database</p>
+        <div class="input-group">
+            <label>Email Address</label>
+            <input type="email" id="loginEmail" value="student@strawberry.com">
+        </div>
+        <div class="input-group">
+            <label>Password</label>
+            <input type="password" id="loginPassword" value="123456">
+        </div>
+        <button class="auth-btn" onclick="handleLogin()">Login 🚀</button>
+        <p class="switch-text">Account nahi hai? <span class="switch-link" onclick="toggleAuthScreens('signupScreen', 'loginScreen')">Sign Up</span></p>
+    </div>
+
+    <div id="signupScreen" class="auth-box" style="display: none;">
+        <div class="auth-logo">🍓</div>
+        <h2>Create Account</h2>
+        <p>Join Strawberry Notes Hub</p>
+        <div class="input-group">
+            <label>Full Name</label>
+            <input type="text" id="signupName" placeholder="Enter your name">
+        </div>
+        <div class="input-group">
+            <label>Email Address</label>
+            <input type="email" id="signupEmail" placeholder="name@gmail.com">
+        </div>
+        <div class="input-group">
+            <label>Password</label>
+            <input type="password" id="signupPassword" placeholder="Min 6 characters">
+        </div>
+        <button class="auth-btn" onclick="handleSignup()">Create Account ✨</button>
+        <p class="switch-text">Account hai? <span class="switch-link" onclick="toggleAuthScreens('loginScreen', 'signupScreen')">Login</span></p>
+    </div>
+
+    <div id="mainDashboard" class="dashboard-menu">
+        <div class="profile-card">
+            <button class="logout-btn" onclick="handleLogout()">Log Out 🚪</button>
+            <div class="avatar">🍓</div>
+            <h2 id="userDisplayName">Smart Student</h2>
+            <p>All-In-One Study Pack Active</p>
+        </div>
+        
+        <div class="menu-heading">🎓 Class 10th Sections</div>
+        <button class="menu-btn" onclick="showPage('class10Science')">🔬 Class 10 Science (All 13 Chapters)</button>
+        <button class="menu-btn" onclick="showPage('class10Maths')">📐 Class 10 Maths (All 15 Chapters)</button>
+        
+        <div class="menu-heading">🎓 Class 12th Sections</div>
+        <button class="menu-btn" onclick="showPage('class12Biology')">🧬 Class 12 Biology (All 13 Chapters)</button>
+        <button class="menu-btn" onclick="showPage('class12PCM')">🧪 Class 12 Physics, Chem & Maths</button>
+        
+        <div class="menu-heading">💻 Coding Bootcamp</div>
+        <button class="menu-btn" onclick="showPage('codingPage')">🌐 HTML, CSS & JavaScript Notes</button>
+        
+        <button class="clear-btn" onclick="clearAppHistory()">🗑️ Clear App History & Cache</button>
+    </div>
+
+    <div id="class10Science" class="sub-page">
+        <div class="header-bar"><button class="back-btn" onclick="showDashboard()">⬅️</button><h3>10th Science (All Chapters)</h3></div>
+        <div class="tag-banner">CH 1 - CH 13 COMPLETE SCIENCE</div>
+        <div class="row-box"><div class="row-title" onclick="toggleAcc(this)"><span>Ch 1: Chemical Reactions & Equations</span><span class="icon-state"></span></div><div class="row-body"><p>Equations represent chemical changes.</p><div class="formula">2Mg + O₂ → 2MgO (Combination Reaction)</div></div></div>
+        <div class="row-box"><div class="row-title" onclick="toggleAcc(this)"><span>Ch 2: Acids, Bases and Salts</span><span class="icon-state"></span></div><div class="row-body"><div class="formula">pH Scale: Acid < 7 | Neutral = 7 | Base > 7</div><p>Bleaching Powder ($CaOCl_2$), Baking Soda ($NaHCO_3$), Washing Soda ($Na_2CO_3\cdot10H_2O$), POP ($CaSO_4\cdot\frac{1}{2}H_2O$).</p></div></div>
+        <div class="row-box"><div class="row-title" onclick="toggleAcc(this)"><span>Ch 3: Metals and Non-metals</span><span class="icon-state"></span></div><div class="row-body"><p>Metals form basic oxides, are ionic with high melting points. Non-metals form acidic/neutral covalent bonds.</p></div></div>
+        <div class="row-box"><div class="row-title" onclick="toggleAcc(this)"><span>Ch 4: Carbon and its Compounds</span><span class="icon-state"></span></div><div class="row-body"><p>Tetravalency and catenation properties. Saturated vs Unsaturated Hydrocarbons. Homologous series.</p></div></div>
+        <div class="row-box"><div class="row-title" onclick="toggleAcc(this)"><span>Ch 5: Life Processes</span><span class="icon-state"></span></div><div class="row-body"><p>Vital pathways: Autotrophic/Heterotrophic Nutrition, Aerobic/Anaerobic Respiration, Heart Pumping, Nephron Excretion.</p></div></div>
+        <div class="row-box"><div class="row-title" onclick="toggleAcc(this)"><span>Ch 6: Control and Coordination</span><span class="icon-state"></span></div><div class="row-body"><p>Nervous system (Reflex Arc, Brain layout) and Endocrine system hormones (Insulin, Thyroxine, Growth Hormone).</p></div></div>
+        <div class="row-box"><div class="row-title" onclick="toggleAcc(this)"><span>Ch 7: How do Organisms Reproduce?</span><span class="icon-state"></span></div><div class="row-body"><p>Asexual modes (Fission, Budding, Regeneration) & Sexual structure in flowering plants and human systems.</p></div></div>
+        <div class="row-box"><div class="row-title" onclick="toggleAcc(this)"><span>Ch 8: Heredity</span><span class="icon-state"></span></div><div class="row-body"><p>Mendel's monohybrid (3:1) and dihybrid (9:3:3:1) crosses. Sex determination parameters: XX (Girl), XY (Boy).</p></div></div>
+        <div class="row-box"><div class="row-title" onclick="toggleAcc(this)"><span>Ch 9: Light - Reflection & Refraction</span><span class="icon-state"></span></div><div class="row-body"><div class="formula">Mirror: 1/f = 1/v + 1/u | Lens: 1/f = 1/v - 1/u | Power: P = 1/f(m)</div></div></div>
+        <div class="row-box"><div class="row-title" onclick="toggleAcc(this)"><span>Ch 10: Human Eye & Colorful World</span><span class="icon-state"></span></div><div class="row-body"><p>Myopia (corrected by Concave lens), Hypermetropia (Convex lens), Prism dispersion, and Scattering rules.</p></div></div>
+        <div class="row-box"><div class="row-title" onclick="toggleAcc(this)"><span>Ch 11: Electricity</span><span class="icon-state"></span></div><div class="row-body"><div class="formula">Ohm's Law: V = IR | Series: Rs = R1+R2 | Parallel: 1/Rp = 1/R1 + 1/R2 | Heat: H = I²Rt</div></div></div>
+        <div class="row-box"><div class="row-title" onclick="toggleAcc(this)"><span>Ch 12: Magnetic Effects of Current</span><span class="icon-state"></span></div><div class="row-body"><p>Right-Hand Thumb Rule, Solenoid fields, Fleming's Left-Hand rule for magnetic forces on current carriers.</p></div></div>
+        <div class="row-box"><div class="row-title" onclick="toggleAcc(this)"><span>Ch 13: Our Environment</span><span class="icon-state"></span></div><div class="row-body"><p>Food chains, Biodegradable waste control, Ecosystem balances, and Lindeman's 10% Energy law loop.</p></div></div>
+    </div>
+
+    <div id="class10Maths" class="sub-page">
+        <div class="header-bar"><button class="back-btn" onclick="showDashboard()">⬅></button><h3>10th Maths (All Chapters)</h3></div>
+        <div class="tag-banner">CH 1 - CH 15 CORE MATHEMATICS FORMULAS</div>
+        <div class="row-box"><div class="row-title" onclick="toggleAcc(this)"><span>Ch 1: Real Numbers</span><span class="icon-state"></span></div><div class="row-body"><div class="formula">HCF(a,b) × LCM(a,b) = a × b</div><p>Irrationality proofs ($\sqrt{2}, \sqrt{3}, \sqrt{5}$).</p></div></div>
+        <div class="row-box"><div class="row-title" onclick="toggleAcc(this)"><span>Ch 2: Polynomials</span><span class="icon-state"></span></div><div class="row-body"><p>Quadratic format: $ax^2 + bx + c$. Zero relationships:</p><div class="formula">Sum (α+β) = -b/a | Product (α·β) = c/a</div></div></div>
+        <div class="row-box"><div class="row-title" onclick="toggleAcc(this)"><span>Ch 3: Pair of Linear Equations in Two Variables</span><span class="icon-state"></span></div><div class="row-body"><p>Intersecting ($a_1/a_2 \neq b_1/b_2$), Parallel ($a_1/a_2 = b_1/b_2 \neq c_1/c_2$), Coincident ($a_1/a_2 = b_1/b_2 = c_1/c_2$).</p></div></div>
+        <div class="row-box"><div class="row-title" onclick="toggleAcc(this)"><span>Ch 4: Quadratic Equations</span><span class="icon-state"></span></div><div class="row-body"><div class="formula">Discriminant D = b² - 4ac | Roots: x = (-b ± √D) / 2a</div><p>D > 0: Real & Distinct, D = 0: Real & Equal, D < 0: No Real Roots.</p></div></div>
+        <div class="row-box"><div class="row-title" onclick="toggleAcc(this)"><span>Ch 5: Arithmetic Progressions (AP)</span><span class="icon-state"></span></div><div class="row-body"><div class="formula">Nth term: an = a + (n-1)d | Sum: Sn = n/2 [2a + (n-1)d]</div></div></div>
+        <div class="row-box"><div class="row-title" onclick="toggleAcc(this)"><span>Ch 6: Triangles</span><span class="icon-state"></span></div><div class="row-body"><p>Basic Proportionality Theorem (BPT) criteria and AAA, SAS, SSS similarity conditions parameters.</p></div></div>
+        <div class="row-box"><div class="row-title" onclick="toggleAcc(this)"><span>Ch 7: Coordinate Geometry</span><span class="icon-state"></span></div><div class="row-body"><div class="formula">Distance = √[(x₂-x1)² + (y₂-y1)²] | Section: [(mx₂+nx1)/(m+n) , (my₂+ny1)/(m+n)]</div></div></div>
+        <div class="row-box"><div class="row-title" onclick="toggleAcc(this)"><span>Ch 8: Introduction to Trigonometry</span><span class="icon-state"></span></div><div class="row-body"><div class="formula">sin²θ + cos²θ = 1 | 1 + tan²θ = sec²θ | 1 + cot²θ = cosec²θ</div><p>Values: $\sin 30^\circ = 1/2, \sin 45^\circ = 1/\sqrt{2}, \sin 60^\circ = \sqrt{3}/2$.</p></div></div>
+        <div class="row-box"><div class="row-title" onclick="toggleAcc(this)"><span>Ch 9: Some Applications of Trigonometry</span><span class="icon-state"></span></div><div class="row-body"><p>Line of sight problems, Angle of Elevation and Angle of Depression matching equations using $\tan\theta = \text{Height}/\text{Base}$.</p></div></div>
+        <div class="row-box"><div class="row-title" onclick="toggleAcc(this)"><span>Ch 10: Circles</span><span class="icon-state"></span></div><div class="row-body"><p>Tangent at any point is perpendicular to the radius. Lengths of tangents from external point are equal.</p></div></div>
+        <div class="row-box"><div class="row-title" onclick="toggleAcc(this)"><span>Ch 11: Constructions</span><span class="icon-state"></span></div><div class="row-body"><p>Line segment inner divisions and tangents map drawing layout algorithms.</p></div></div>
+        <div class="row-box"><div class="row-title" onclick="toggleAcc(this)"><span>Ch 12: Areas Related to Circles</span><span class="icon-state"></span></div><div class="row-body"><div class="formula">Area of Sector = (θ/360) × πr² | Length of Arc = (θ/360) × 2πr</div></div></div>
+        <div class="row-box"><div class="row-title" onclick="toggleAcc(this)"><span>Ch 13: Surface Areas and Volumes</span><span class="icon-state"></span></div><div class="row-body"><div class="formula">Sphere Vol = (4/3)πr³ | Cone Vol = (1/3)πr²h | Cylinder Vol = πr²h</div></div></div>
+        <div class="row-box"><div class="row-title" onclick="toggleAcc(this)"><span>Ch 14: Statistics</span><span class="icon-state"></span></div><div class="row-body"><div class="formula">Empirical Rule: 3 Median = Mode + 2 Mean</div><p>Mean calculation methods: Direct ($\sum f_ix_i / \sum f_i$), Assumed Mean setup.</p></div></div>
+        <div class="row-box"><div class="row-title" onclick="toggleAcc(this)"><span>Ch 15: Probability</span><span class="icon-state"></span></div><div class="row-body"><div class="formula">P(E) = Favorable Outcomes / Total Outcomes | 0 ≤ P(E) ≤ 1</div></div></div>
+    </div>
+    <div id="class12Biology" class="sub-page">
+        <div class="header-bar"><button class="back-btn" onclick="showDashboard()">⬅</button><h3>12th Biology (All Chapters)</h3></div>
+        <div class="tag-banner">🧬 BIOLOGY - FULL 13 CHAPTER PACK</div>
+        <div class="row-box"><div class="row-title" onclick="toggleAcc(this)"><span>Ch 1: Sexual Reproduction in Flowering Plants</span><span class="icon-state"></span></div><div class="row-body"><p>Microsporogenesis, Megasporogenesis, Pollen-pistil interactions rules.</p><div class="formula">Double Fertilization = Syngamy + Triple Fusion (Forms 3N Endosperm)</div></div></div>
+        <div class="row-box"><div class="row-title" onclick="toggleAcc(this)"><span>Ch 2: Human Reproduction</span><span class="icon-state"></span></div><div class="row-body"><p>Male/Female structures, Spermatogenesis loops vs Oogenesis breaks, Menstrual cycle hormones (LH surge, Progesterone), Blastocyst implantation.</p></div></div>
+        <div class="row-box"><div class="row-title" onclick="toggleAcc(this)"><span>Ch 3: Reproductive Health</span><span class="icon-state"></span></div><div class="row-body"><p>Contraceptive tools (IUDs, Tubectomy, Vasectomy). STDs alerts. ART tools: IVF, ZIFT, GIFT setups.</p></div></div>
+        <div class="row-box"><div class="row-title" onclick="toggleAcc(this)"><span>Ch 4: Principles of Inheritance & Variation</span><span class="icon-state"></span></div><div class="row-body"><p>Mendel's core laws. Non-Mendelian exceptions: Incomplete dominance, Co-dominance (ABO blood). Sex-linked defects: Hemophilia, Down's trisomy.</p></div></div>
+        <div class="row-box"><div class="row-title" onclick="toggleAcc(this)"><span>Ch 5: Molecular Basis of Inheritance</span><span class="icon-state"></span></div><div class="row-body"><div class="formula">Central Dogma: DNA → Transcription → RNA → Translation → Protein</div><p>DNA semi-conservative replication, Lac Operon switches, DNA Fingerprinting sequences.</p></div></div>
+        <div class="row-box"><div class="row-title" onclick="toggleAcc(this)"><span>Ch 6: Evolution</span><span class="icon-state"></span></div><div class="row-body"><p>Oparin-Haldane concept, Miller-Urey experiment spark values. Homologous vs Analogous parameters, Hardy-Weinberg equilibrium tracking.</p></div></div>
+        <div class="row-box"><div class="row-title" onclick="toggleAcc(this)"><span>Ch 7: Human Health & Disease</span><span class="icon-state"></span></div><div class="row-body"><p>Malaria lifecycle paths, Typhoid/Amoebiasis vectors. Innate vs Acquired antibody systems, T/B cells loops, HIV/AIDS mechanism, Cancer tumor lines.</p></div></div>
+        <div class="row-box"><div class="row-title" onclick="toggleAcc(this)"><span>Ch 8: Microbes in Human Welfare</span><span class="icon-state"></span></div><div class="row-body"><p>LAB curd setup, Saccharomyces bread making. Sewage biological oxygen demand (BOD) processing, Biogas methanogens, Biofertilizers tracking.</p></div></div>
+        <div class="row-box"><div class="row-title" onclick="toggleAcc(this)"><span>Ch 9: Biotechnology - Principles & Processes</span><span class="icon-state"></span></div><div class="row-body"><p>rDNA tech rules. Restriction Endonucleases markers, pBR322 vector configurations, PCR cycles (Denaturation, Annealing, Extension).</p></div></div>
+        <div class="row-box"><div class="row-title" onclick="toggleAcc(this)"><span>Ch 10: Biotechnology & Its Applications</span><span class="icon-state"></span></div><div class="row-body"><p>Bt Cotton toxic parameters, RNA interference (RNAi) shields. Humulin engineering, ADA gene therapy fixes, Transgenic safety validation models.</p></div></div>
+        <div class="row-box"><div class="row-title" onclick="toggleAcc(this)"><span>Ch 11: Organisms & Populations</span><span class="icon-state"></span></div><div class="row-body"><p>Niche adaptations. Population curves (Logistic vs Exponential equations). Interaction models: Mutualism, Parasitism, Amensalism.</p></div></div>
+        <div class="row-box"><div class="row-title" onclick="toggleAcc(this)"><span>Ch 12: Ecosystem</span><span class="icon-state"></span></div><div class="row-body"><p>Productivity layers (Primary/Secondary), Catabolism decomposition steps. Energy pyramids rules (Sea biomass inverted pyramid exceptions).</p></div></div>
+        <div class="row-box"><div class="row-title" onclick="toggleAcc(this)"><span>Ch 13: Biodiversity & Its Conservation</span><span class="icon-state"></span></div><div class="row-body"><p>The Evil Quartet extinction accelerators. Conservation frameworks: In-situ (Biosphere zones) vs Ex-situ (Cryo banks, Zoo centers).</p></div></div>
+    </div>
+
+    <div id="class12PCM" class="sub-page">
+        <div class="header-bar"><button class="back-btn" onclick="showDashboard()">⬅</button><h3>12th Core Formula Pack</h3></div>
+        
+        <div class="tag-banner">⚡ PHYSICS CORES</div>
+        <div class="row-box"><div class="row-title" onclick="toggleAcc(this)"><span>Electrostatics & Current</span><span class="icon-state"></span></div><div class="row-body"><div class="formula">Coulomb's Law: F = k·(q1·q2)/r² | Gauss Law: ∮E·dA = q/ε0 | Ohm Vector: J = σE</div></div></div>
+        <div class="row-box"><div class="row-title" onclick="toggleAcc(this)"><span>Magnetism & Optics</span><span class="icon-state"></span></div><div class="row-body"><div class="formula">Biot-Savart: dB = (μ0/4π)·(I dl×r)/r³ | Lens Maker: 1/f = (μ-1)(1/R1 - 1/R2)</div></div></div>
+
+        <div class="tag-banner">🧪 CHEMISTRY CORES</div>
+        <div class="row-box"><div class="row-title" onclick="toggleAcc(this)"><span>Physical & Organic Mechanics</span><span class="icon-state"></span></div><div class="row-body"><div class="formula">Nernst: E = E0 - (0.0591/n)log(Q) | Arrhenius: k = A·e^(-Ea/RT)</div><p>Named Reactions: SN1/SN2 loops, Aldol Condensation, Reimer-Tiemann paths, Williamson Ether generation.</p></div></div>
+
+        <div class="tag-banner">📐 MATHEMATICS CORES</div>
+        <div class="row-box"><div class="row-title" onclick="toggleAcc(this)"><span>Calculus & Vectors</span><span class="icon-state"></span></div><div class="row-body"><div class="formula">Integration: ∫xⁿdx = xⁿ⁺¹/(n+1) + C | Parts: ∫u·v dx = u∫v dx - ∫[u'∫v dx]dx</div><div class="formula">Vector Dot: a·b = |a||b|cosθ | Vector Cross: |a×b| = |a||b|sinθ</div></div></div>
+    </div>
+
+    <div id="codingPage" class="sub-page">
+        <div class="header-bar"><button class="back-btn" onclick="showDashboard()">⬅</button><h3>Web Development Notes</h3></div>
+        
+        <div class="tag-banner">🌐 HTML5 (STRUCTURE)</div>
+        <div class="row-box"><div class="row-title" onclick="toggleAcc(this)"><span>Core Semantic Elements</span><span class="icon-state"></span></div><div class="row-body"><p>Layout structuring boilerplate components text labels:</p><div class="code-box">&lt;nav&gt; Navbar Links &lt;/nav&gt;\n&lt;section id="main"&gt; Main body details &lt;/section&gt;\n&lt;aside&gt; Sidebar items info &lt;/aside&gt;</div></div></div>
+        
+        <div class="tag-banner">🎨 CSS3 (STYLE & RESPONSIVE)</div>
+        <div class="row-box"><div class="row-title" onclick="toggleAcc(this)"><span>Flexbox Alignment & Media Rules</span><span class="icon-state"></span></div><div class="row-body"><p>Centering properties and mobile styling screens matching layouts engines rules:</p><div class="code-box">.container {\n  display: flex;\n  justify-content: space-between;\n}\n@media (max-width: 600px) {\n  .container { flex-direction: column; }\n}</div></div></div>
+        
+        <div class="tag-banner">⚡ JAVASCRIPT (LOGIC & INTERACTIVE)</div>
+        <div class="row-box"><div class="row-title" onclick="toggleAcc(this)"><span>Asynchronous Calls & DOM Engine</span><span class="icon-state"></span></div><div class="row-body"><p>API fetch data arrays map handlers and conditional rendering loops triggers:</p><div class="code-box">// Fetching Data Pattern Example\nfetch(url)\n  .then(res => res.json())\n  .then(data => console.log(data));\n\n// Element Toggle logic\ndocument.getElementById('box').classList.toggle('active');</div></div></div>
+    </div>
+
+</div>
+
+<script>
+    function toggleAuthScreens(showId, hideId) {
+        document.getElementById(hideId).style.display = 'none';
+        document.getElementById(showId).style.display = 'block';
+    }
+
+    function handleLogin() {
+        const email = document.getElementById('loginEmail').value;
+        const pass = document.getElementById('loginPassword').value;
+        if(email === "" || pass === "") {
+            alert("Bhai, credentials enter karo!");
+            return;
+        }
+        const savedName = localStorage.getItem('username') || "Smart Student 🚀";
+        document.getElementById('userDisplayName').innerText = savedName;
+        document.getElementById('loginScreen').style.display = 'none';
+        document.getElementById('mainDashboard').style.display = 'block';
+    }
+
+    function handleSignup() {
+        const name = document.getElementById('signupName').value;
+        const email = document.getElementById('signupEmail').value;
+        const pass = document.getElementById('signupPassword').value;
+        if(name === "" || email === "" || pass === "") {
+            alert("Saare boxes fill kijiye!");
+            return;
+        }
+        localStorage.setItem('username', name + " 🚀");
+        alert("Account Registered successfully! Ab Login kijiye.");
+        toggleAuthScreens('loginScreen', 'signupScreen');
+    }
+
+    function handleLogout() {
+        document.getElementById('mainDashboard').style.display = 'none';
+        document.getElementById('loginScreen').style.display = 'block';
+    }
+
+    function showPage(pageId) {
+        document.getElementById('mainDashboard').style.display = 'none';
+        document.querySelectorAll('.sub-page').forEach(p => p.style.display = 'none');
+        document.getElementById(pageId).style.display = 'block';
+        window.scrollTo(0,0);
+    }
+
+    function showDashboard() {
+        document.querySelectorAll('.sub-page').forEach(p => p.style.display = 'none');
+        document.getElementById('mainDashboard').style.display = 'block';
+        window.scrollTo(0,0);
+    }
+
+    function toggleAcc(el) {
+        el.parentElement.classList.toggle('opened');
+    }
+
+    function clearAppHistory() {
+        if(confirm("Kya aap Strawberry Notes Hub ka saara data aur saved accounts delete karna chahte hain?")) {
+            localStorage.clear();
+            sessionStorage.clear();
+            alert("Cache fully cleaned successfully!");
+            window.location.reload();
+        }
+    }
+</script>
+</body>
+</html>
+  
+
+    
