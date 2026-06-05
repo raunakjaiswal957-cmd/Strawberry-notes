@@ -3,291 +3,117 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Download Free Hand Written Notes</title>
+    <title>Class 10 Science Premium Notes</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
-        body { background-color: #f0f2f5; color: #333; padding: 20px; }
-        .container { max-width: 1100px; margin: 0 auto; background: #ffffff; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
-        .header-banner { background: linear-gradient(135deg, #1e3a8a, #0d253f); color: white; padding: 30px; border-radius: 10px; text-align: center; margin-bottom: 25px; position: relative; }
-        .header-banner h1 { font-size: 32px; margin-bottom: 10px; font-weight: bold; }
-        .header-banner p { font-size: 16px; opacity: 0.9; }
-        .delete-bar-container { margin: 15px 0 5px 0; display: flex; justify-content: center; }
-        .delete-history-btn { background: #e63946; color: white; border: none; padding: 8px 16px; border-radius: 20px; cursor: pointer; font-size: 13px; font-weight: bold; transition: background 0.2s; display: none; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
-        .delete-history-btn:hover { background: #c92a3a; }
-        .auth-overlay { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); align-items: center; justify-content: center; }
-        .auth-box { background: white; padding: 30px; border-radius: 10px; width: 100%; max-width: 400px; text-align: center; box-shadow: 0 5px 20px rgba(0,0,0,0.3); }
-        .auth-box h2 { color: #1e3a8a; margin-bottom: 15px; }
-        .auth-box input { width: 100%; padding: 12px; margin-bottom: 15px; border: 2px solid #ddd; border-radius: 6px; outline: none; font-size: 15px; }
-        .auth-box input:focus { border-color: #1e3a8a; }
-        .auth-box button { width: 100%; background: #1e3a8a; color: white; border: none; padding: 12px; border-radius: 6px; font-size: 16px; font-weight: bold; cursor: pointer; }
-        .auth-box button:hover { background: #12255c; }
-        .tab-navigation { display: flex; justify-content: center; gap: 15px; margin-bottom: 30px; border-bottom: 2px solid #ddd; padding-bottom: 10px; }
-        .tab-btn { background: none; border: none; font-size: 18px; font-weight: bold; color: #777; cursor: pointer; padding: 10px 20px; transition: all 0.3s; }
-        .tab-btn.active { color: #1e3a8a; border-bottom: 4px solid #1e3a8a; }
-        .search-container { max-width: 600px; margin: 0 auto 35px auto; position: relative; display: flex; align-items: center; }
-        .search-container input { width: 100%; padding: 15px 50px 15px 20px; font-size: 16px; border: 2px solid #ddd; border-radius: 30px; outline: none; transition: all 0.3s; }
-        .search-container input:focus { border-color: #1e3a8a; box-shadow: 0 0 8px rgba(30, 58, 138, 0.2); }
-        .clear-search-btn { position: absolute; right: 20px; background: #ccc; border: none; color: white; width: 24px; height: 24px; border-radius: 50%; cursor: pointer; display: none; align-items: center; justify-content: center; font-weight: bold; font-size: 12px; }
-        .clear-search-btn:hover { background: #999; }
-        .subject-filter { display: flex; justify-content: center; gap: 10px; margin-bottom: 25px; flex-wrap: wrap; }
-        .sub-filter-btn { background: #e2e8f0; border: none; padding: 8px 16px; border-radius: 20px; cursor: pointer; font-weight: 600; color: #4a5568; }
-        .sub-filter-btn.active { background: #1e3a8a; color: white; }
-        .content-panel { display: none; }
-        .content-panel.active { display: block; }
-        .chapters-grid { display: grid; grid-template-columns: 1fr; gap: 20px; }
-        @media (min-width: 768px) { .chapters-grid { grid-template-columns: 1fr 1fr; } }
-        .chapter-card { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between; border-left: 5px solid #1e3a8a; position: relative; }
-        .card-header-tags { display: flex; gap: 5px; margin-bottom: 10px; }
-        .tag { font-size: 11px; padding: 4px 8px; border-radius: 4px; font-weight: bold; text-transform: uppercase; }
-        .tag-handwritten { background: #fef3c7; color: #d97706; border: 1px solid #fcd34d; }
-        .tag-digital { background: #dcfce7; color: #15803d; border: 1px solid #bbf7d0; }
-        .tag-subject { background: #e0f2fe; color: #0369a1; }
-        .chapter-card h3 { font-size: 18px; color: #0d253f; margin-bottom: 8px; }
-        .chapter-card p { font-size: 14px; color: #64748b; margin-bottom: 15px; }
-        .btn-group { display: flex; gap: 10px; }
-        .btn { flex: 1; text-align: center; background-color: #1e3a8a; color: white; padding: 12px; border-radius: 6px; font-weight: 600; font-size: 14px; cursor: pointer; border: none; text-decoration: none; }
-        .btn:hover { background-color: #12255c; }
-        .btn-last-read { background-color: #d97706 !important; }
-        #no-results { display: none; text-align: center; color: #ef4444; font-weight: bold; margin-top: 30px; font-size: 18px; }
-        .modal { display: none; position: fixed; z-index: 3000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.6); overflow-y: auto; padding: 20px; }
-        .modal-content { background-color: #fff; margin: 30px auto; padding: 30px; border-radius: 12px; max-width: 850px; position: relative; box-shadow: 0 5px 25px rgba(0,0,0,0.2); line-height: 1.8; }
-        .close-btn { position: absolute; right: 20px; top: 15px; font-size: 30px; cursor: pointer; color: #aaa; }
-        .close-btn:hover { color: #333; }
-        .modal-content h2 { color: #0d253f; border-bottom: 3px solid #1e3a8a; padding-bottom: 8px; margin-bottom: 20px; }
-        .modal-content h3 { color: #1e3a8a; margin-top: 25px; margin-bottom: 10px; font-size: 19px; }
-        .modal-content p { margin-bottom: 15px; font-size: 15px; color: #334155; }
-        .modal-content ul { margin-left: 25px; margin-bottom: 15px; }
-        .modal-content li { margin-bottom: 6px; font-size: 15px; }
-        .formula-box { background-color: #f8fafc; border-left: 5px solid #1e3a8a; padding: 15px; margin: 15px 0; border-radius: 4px; font-weight: bold; color: #0f172a; font-family: 'Courier New', Courier, monospace; white-space: pre-wrap; }
+        body { background-color: #f4f6f9; color: #333; padding: 15px; }
+        .container { max-width: 800px; margin: 0 auto; background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+        .header { background: linear-gradient(135deg, #0f2027, #203a43, #2c5364); color: white; padding: 25px; border-radius: 10px; text-align: center; margin-bottom: 20px; }
+        .header h1 { font-size: 26px; margin-bottom: 8px; }
+        .header p { font-size: 14px; opacity: 0.9; }
+        .chapter-box { background: #fff; border: 1px solid #e2e8f0; border-left: 5px solid #203a43; border-radius: 8px; margin-bottom: 15px; padding: 15px; }
+        .chapter-title { font-size: 18px; color: #111; font-weight: bold; margin-bottom: 10px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
+        .chapter-content { display: none; padding-top: 10px; border-top: 1px dashed #ddd; margin-top: 10px; line-height: 1.7; color: #444; }
+        .chapter-content h3 { color: #203a43; margin: 15px 0 5px 0; font-size: 16px; }
+        .chapter-content ul { margin-left: 20px; margin-bottom: 10px; }
+        .formula { background: #f8fafc; border-left: 3px solid #203a43; padding: 10px; font-family: monospace; margin: 10px 0; font-weight: bold; color: #000; }
+        .open .chapter-content { display: block; }
+        .toggle-icon::after { content: '➕'; font-size: 14px; }
+        .open .toggle-icon::after { content: '➖'; }
     </style>
 </head>
 <body>
-<div id="auth-modal" class="auth-overlay">
-    <div class="auth-box">
-        <h2>Student Account Portal</h2>
-        <p style="margin-bottom: 15px; color: #64748b; font-size: 14px;">Bina copy-paste kiye genuine dashboard access karein.</p>
-        <input type="text" id="username-input" placeholder="Apna Poora Naam Likhein..." required>
-        <input type="password" id="password-input" placeholder="Set New Password..." required>
-        <button onclick="handleSignup()">Login / Register</button>
-    </div>
-</div>
+
 <div class="container">
-    <div class="header-banner">
-        <h1 id="welcome-title">"Download free hand written notes"</h1>
-        <p id="student-welcome-msg">Premium study network built exactly for top performance.</p>
-        <p id="last-read-tracker" style="margin-top: 12px; font-size: 14px; color: #fef08a; font-weight: bold; display: none;"></p>
-        <div class="delete-bar-container"><button id="delete-bar-btn" class="delete-history-btn" onclick="clearOldNotesHistory()">🗑️ Clear Old History / Delete Bar</button></div>
+    <div class="header">
+        <h1>Class 10 Science Notes 📚</h1>
+        <p>Apne dosto ke sath share karein aur milkar padhein!</p>
     </div>
-    <div class="tab-navigation">
-        <button class="tab-btn active" onclick="switchMainTab('class10')">Class 10 Syllabus</button>
-        <button class="tab-btn" onclick="switchMainTab('coding')">Coding Courses</button>
-    </div>
-    <div class="search-container">
-        <input type="text" id="master-search" placeholder="Chapter ka naam, code ya topic search karein..." onkeyup="executeSearch()">
-        <button id="clear-search-x" class="clear-search-btn" onclick="clearSearchBar()">&times;</button>
-    </div>
-        <div id="panel-class10" class="content-panel active">
-        <div class="subject-filter">
-            <button class="sub-filter-btn active" id="btn-sub-all10" onclick="filterSubject('all', '10')">All Subjects</button>
-            <button class="sub-filter-btn" id="btn-sub-math" onclick="filterSubject('math', '10')">Maths</button>
-            <button class="sub-filter-btn" id="btn-sub-science" onclick="filterSubject('science', '10')">Science</button>
+
+    <!-- Chapter 1 -->
+    <div class="chapter-box">
+        <div class="chapter-title" onclick="toggleChapter(this)">
+            <span>Ch 1: Chemical Reactions & Equations</span>
+            <span class="toggle-icon"></span>
         </div>
-        <div class="chapters-grid" id="grid-class10">
-            <div class="chapter-card" data-subject="math" data-search="chapter 1 real numbers vastavik sankhyae maths"><div class="card-header-tags"><span class="tag tag-handwritten">Handwritten</span><span class="tag tag-subject">Maths</span></div><h3>Ch 1: Real Numbers</h3><p>Fundamental Theorem of Arithmetic, Rational proofs.</p><button class="btn" id="btn-m1" onclick="loadStudyMaterial('m1', 'Class 10 Maths - Ch 1')">View Page</button></div>
-            <div class="chapter-card" data-subject="math" data-search="chapter 2 polynomials bahupad maths"><div class="card-header-tags"><span class="tag tag-digital">Digital</span><span class="tag tag-subject">Maths</span></div><h3>Ch 2: Polynomials</h3><p>Relationship between Zeroes & Coefficients.</p><button class="btn" id="btn-m2" onclick="loadStudyMaterial('m2', 'Class 10 Maths - Ch 2')">View Page</button></div>
-            <div class="chapter-card" data-subject="math" data-search="chapter 3 pair of linear equations maths"><div class="card-header-tags"><span class="tag tag-handwritten">Handwritten</span><span class="tag tag-subject">Maths</span></div><h3>Ch 3: Pair of Linear Equations</h3><p>Substitution, Elimination methods.</p><button class="btn" id="btn-m3" onclick="loadStudyMaterial('m3', 'Class 10 Maths - Ch 3')">View Page</button></div>
-            <div class="chapter-card" data-subject="math" data-search="chapter 4 quadratic equations dvighat samikaran maths"><div class="card-header-tags"><span class="tag tag-handwritten">Handwritten</span><span class="tag tag-subject">Maths</span></div><h3>Ch 4: Quadratic Equations</h3><p>Standard Form, Quadratic Formula, Nature of Roots.</p><button class="btn" id="btn-m4" onclick="loadStudyMaterial('m4', 'Class 10 Maths - Ch 4')">View Page</button></div>
-            <div class="chapter-card" data-subject="math" data-search="chapter 5 arithmetic progressions ap samantar shredi maths"><div class="card-header-tags"><span class="tag tag-digital">Digital</span><span class="tag tag-subject">Maths</span></div><h3>Ch 5: AP</h3><p>Finding nth term and Sum of first n terms.</p><button class="btn" id="btn-m5" onclick="loadStudyMaterial('m5', 'Class 10 Maths - Ch 5')">View Page</button></div>
-            <div class="chapter-card" data-subject="math" data-search="chapter 6 triangles tribhuj maths"><div class="card-header-tags"><span class="tag tag-handwritten">Handwritten</span><span class="tag tag-subject">Maths</span></div><h3>Ch 6: Triangles</h3><p>Similarity of Triangles, Basic Proportionality Theorem.</p><button class="btn" id="btn-m6" onclick="loadStudyMaterial('m6', 'Class 10 Maths - Ch 6')">View Page</button></div>
-            <div class="chapter-card" data-subject="math" data-search="chapter 7 coordinate geometry nirdeshank jyamiti maths"><div class="card-header-tags"><span class="tag tag-digital">Digital</span><span class="tag tag-subject">Maths</span></div><h3>Ch 7: Coordinate Geometry</h3><p>Distance Formula, Section Formula coordinate logic.</p><button class="btn" id="btn-m7" onclick="loadStudyMaterial('m7', 'Class 10 Maths - Ch 7')">View Page</button></div>
-            <div class="chapter-card" data-subject="math" data-search="chapter 8 introduction to trigonometry trikonmiti maths"><div class="card-header-tags"><span class="tag tag-handwritten">Handwritten</span><span class="tag tag-subject">Maths</span></div><h3>Ch 8: Introduction to Trigonometry</h3><p>Trigonometric Ratios, Specific Angles values table, Identities.</p><button class="btn" id="btn-m8" onclick="loadStudyMaterial('m8', 'Class 10 Maths - Ch 8')">View Page</button></div>
-            <div class="chapter-card" data-subject="math" data-search="chapter 9 some applications of trigonometry height distance maths"><div class="card-header-tags"><span class="tag tag-handwritten">Handwritten</span><span class="tag tag-subject">Maths</span></div><h3>Ch 9: Applications of Trigonometry</h3><p>Heights and Distances, Angle of Elevation.</p><button class="btn" id="btn-m9" onclick="loadStudyMaterial('m9', 'Class 10 Maths - Ch 9')">View Page</button></div>
-            <div class="chapter-card" data-subject="math" data-search="chapter 10 circles vritt maths"><div class="card-header-tags"><span class="tag tag-digital">Digital</span><span class="tag tag-subject">Maths</span></div><h3>Ch 10: Circles</h3><p>Tangent theorems, external point tangent properties.</p><button class="btn" id="btn-m10" onclick="loadStudyMaterial('m10', 'Class 10 Maths - Ch 10')">View Page</button></div>
-            <div class="chapter-card" data-subject="math" data-search="chapter 11 constructions rachnaye maths"><div class="card-header-tags"><span class="tag tag-handwritten">Handwritten</span><span class="tag tag-subject">Maths</span></div><h3>Ch 11: Constructions</h3><p>Division of line segment, Tangents geometry rules.</p><button class="btn" id="btn-m11" onclick="loadStudyMaterial('m11', 'Class 10 Maths - Ch 11')">View Page</button></div>
-            <div class="chapter-card" data-subject="math" data-search="chapter 12 areas related to circles vritt k kshtrafal maths"><div class="card-header-tags"><span class="tag tag-digital">Digital</span><span class="tag tag-subject">Maths</span></div><h3>Ch 12: Areas Related to Circles</h3><p>Area of Sector and Segment of a circle.</p><button class="btn" id="btn-m12" onclick="loadStudyMaterial('m12', 'Class 10 Maths - Ch 12')">View Page</button></div>
-            <div class="chapter-card" data-subject="math" data-search="chapter 13 surface areas and volumes prishthiya k क्षेत्रफल maths"><div class="card-header-tags"><span class="tag tag-handwritten">Handwritten</span><span class="tag tag-subject">Maths</span></div><h3>Ch 13: Surface Areas and Volumes</h3><p>Cube, Cylinder, Cone area & volume formulas.</p><button class="btn" id="btn-m13" onclick="loadStudyMaterial('m13', 'Class 10 Maths - Ch 13')">View Page</button></div>
-            <div class="chapter-card" data-subject="math" data-search="chapter 14 statistics sankhyiki maths"><div class="card-header-tags"><span class="tag tag-digital">Digital</span><span class="tag tag-subject">Maths</span></div><h3>Ch 14: Statistics</h3><p>Mean, Median, Mode calculation formulas.</p><button class="btn" id="btn-m14" onclick="loadStudyMaterial('m14', 'Class 10 Maths - Ch 14')">View Page</button></div>
-            <div class="chapter-card" data-subject="math" data-search="chapter 15 probability prayikta maths"><div class="card-header-tags"><span class="tag tag-handwritten">Handwritten</span><span class="tag tag-subject">Maths</span></div><h3>Ch 15: Probability</h3><p>Dice, Coins and Card deck probability distribution.</p><button class="btn" id="btn-m15" onclick="loadStudyMaterial('m15', 'Class 10 Maths - Ch 15')">View Page</button></div>
-            <div class="chapter-card" data-subject="science" data-search="chapter 1 chemical reactions equations science"><div class="card-header-tags"><span class="tag tag-handwritten">Handwritten</span><span class="tag tag-subject">Science</span></div><h3>Ch 1: Chemical Reactions</h3><p>Balancing, Combination, Decomposition.</p><button class="btn" id="btn-s1" onclick="loadStudyMaterial('s1', 'Class 10 Science - Ch 1')">View Page</button></div>
-            <div class="chapter-card" data-subject="science" data-search="chapter 2 acids bases salts aml kshar lavan science"><div class="card-header-tags"><span class="tag tag-digital">Digital</span><span class="tag tag-subject">Science</span></div><h3>Ch 2: Acids, Bases and Salts</h3><p>pH indicators, Neutralisation, Baking Soda.</p><button class="btn" id="btn-s2" onclick="loadStudyMaterial('s2', 'Class 10 Science - Ch 2')">View Page</button></div>
-            <div class="chapter-card" data-subject="science" data-search="chapter 3 metals non metals dhatu adhatu science"><div class="card-header-tags"><span class="tag tag-handwritten">Handwritten</span><span class="tag tag-subject">Science</span></div><h3>Ch 3: Metals and Non-metals</h3><p>Physical & Chemical properties, Reactivity series.</p><button class="btn" id="btn-s3" onclick="loadStudyMaterial('s3', 'Class 10 Science - Ch 3')">View Page</button></div>
-            <div class="chapter-card" data-subject="science" data-search="chapter 4 carbon its compounds carbon yogik science"><div class="card-header-tags"><span class="tag tag-digital">Digital</span><span class="tag tag-subject">Science</span></div><h3>Ch 4: Carbon and its Compounds</h3><p>Covalent bonds, Saturated Hydrocarbons.</p><button class="btn" id="btn-s4" onclick="loadStudyMaterial('s4', 'Class 10 Science - Ch 4')">View Page</button></div>
-            <div class="chapter-card" data-subject="science" data-search="chapter 5 life processes jaiv prakram science"><div class="card-header-tags"><span class="tag tag-handwritten">Handwritten</span><span class="tag tag-subject">Science</span></div><h3>Ch 5: Life Processes</h3><p>Nutrition, Photosynthesis, Respiration, Excretion.</p><button class="btn" id="btn-s5" onclick="loadStudyMaterial('s5', 'Class 10 Science - Ch 5')">View Page</button></div>
-            <div class="chapter-card" data-subject="science" data-search="chapter 6 control coordination niyantran samnvay science"><div class="card-header-tags"><span class="tag tag-digital">Digital</span><span class="tag tag-subject">Science</span></div><h3>Ch 6: Control and Coordination</h3><p>Nervous system, Neurons structure, Brain, Hormones.</p><button class="btn" id="btn-s6" onclick="loadStudyMaterial('s6', 'Class 10 Science - Ch 6')">View Page</button></div>
-            <div class="chapter-card" data-subject="science" data-search="chapter 7 how do organisms reproduce jeev janan science"><div class="card-header-tags"><span class="tag tag-handwritten">Handwritten</span><span class="tag tag-subject">Science</span></div><h3>Ch 7: How do Organisms Reproduce?</h3><p>Asexual and Sexual propagation rules.</p><button class="btn" id="btn-s7" onclick="loadStudyMaterial('s7', 'Class 10 Science - Ch 7')">View Page</button></div>
-            <div class="chapter-card" data-subject="science" data-search="chapter 8 heredity science"><div class="card-header-tags"><span class="tag tag-digital">Digital</span><span class="tag tag-subject">Science</span></div><h3>Ch 8: Heredity</h3><p>Mendel's Laws, Cross patterns, Sex Determination.</p><button class="btn" id="btn-s8" onclick="loadStudyMaterial('s8', 'Class 10 Science - Ch 8')">View Page</button></div>
-            <div class="chapter-card" data-subject="science" data-search="chapter 9 light reflection refraction science"><div class="card-header-tags"><span class="tag tag-handwritten">Handwritten</span><span class="tag tag-subject">Science</span></div><h3>Ch 9: Light - Reflection & Refraction</h3><p>Spherical Mirrors, Lenses, Magnification.</p><button class="btn" id="btn-s9" onclick="loadStudyMaterial('s9', 'Class 10 Science - Ch 9')">View Page</button></div>
-            <div class="chapter-card" data-subject="science" data-search="chapter 10 human eye colorful world science"><div class="card-header-tags"><span class="tag tag-digital">Digital</span><span class="tag tag-subject">Science</span></div><h3>Ch 10: Human Eye & Colorful World</h3><p>Vision defects, Prism dispersion, Atmospheric refraction.</p><button class="btn" id="btn-s10" onclick="loadStudyMaterial('s10', 'Class 10 Science - Ch 10')">View Page</button></div>
-            <div class="chapter-card" data-subject="science" data-search="chapter 11 electricity vidyut current science"><div class="card-header-tags"><span class="tag tag-handwritten">Handwritten</span><span class="tag tag-subject">Science</span></div><h3>Ch 11: Electricity</h3><p>Ohm's Law, Resistance series & parallel layouts.</p><button class="btn" id="btn-s11" onclick="loadStudyMaterial('s11', 'Class 10 Science - Ch 11')">View Page</button></div>
-            <div class="chapter-card" data-subject="science" data-search="chapter 12 magnetic effects of current science"><div class="card-header-tags"><span class="tag tag-digital">Digital</span><span class="tag tag-subject">Science</span></div><h3>Ch 12: Magnetic Effects of Current</h3><p>Field lines rules, Solenoids, Fleming's rules.</p><button class="btn" id="btn-s12" onclick="loadStudyMaterial('s12', 'Class 10 Science - Ch 12')">View Page</button></div>
-            <div class="chapter-card" data-subject="science" data-search="chapter 13 our environment paryavaran science"><div class="card-header-tags"><span class="tag tag-handwritten">Handwritten</span><span class="tag tag-subject">Science</span></div><h3>Ch 13: Our Environment</h3><p>Ecosystem items, Food web, 10% Energy law.</p><button class="btn" id="btn-s13" onclick="loadStudyMaterial('s13', 'Class 10 Science - Ch 13')">View Page</button></div>
-        </div>
-                </div>
-                        <div id="panel-coding" class="content-panel">
-        <div class="subject-filter">
-            <button class="sub-filter-btn active" id="btn-sub-allcoding" onclick="filterSubject('all', 'coding')">All Tech</button>
-            <button class="sub-filter-btn" id="btn-sub-html" onclick="filterSubject('html', 'coding')">HTML</button>
-            <button class="sub-filter-btn" id="btn-sub-css" onclick="filterSubject('css', 'coding')">CSS</button>
-            <button class="sub-filter-btn" id="btn-sub-js" onclick="filterSubject('js', 'coding')">JavaScript</button>
-            <button class="sub-filter-btn" id="btn-sub-python" onclick="filterSubject('python', 'coding')">Python</button>
-        </div>
-        <div class="chapters-grid" id="grid-coding">
-            <div class="chapter-card" data-subject="html" data-search="html basic tags boilerplate web coding"><div class="card-header-tags"><span class="tag tag-digital">Digital</span><span class="tag tag-subject">HTML</span></div><h3>HTML5 Basics</h3><p>Tags, Elements, Attributes, Layout boilerplate.</p><button class="btn" id="btn-c1" onclick="loadStudyMaterial('c1', 'Coding - HTML5 Basics')">View Page</button></div>
-            <div class="chapter-card" data-subject="css" data-search="css flexbox grid responsiveness coding"><div class="card-header-tags"><span class="tag tag-digital">Digital</span><span class="tag tag-subject">CSS</span></div><h3>CSS3 Styling & Grid</h3><p>Selectors, Box Model, Flexbox layout engine.</p><button class="btn" id="btn-c2" onclick="loadStudyMaterial('c2', 'Coding - CSS3 Layouts')">View Page</button></div>
-            <div class="chapter-card" data-subject="js" data-search="javascript localstorage arrays dynamics coding"><div class="card-header-tags"><span class="tag tag-handwritten">Handwritten</span><span class="tag tag-subject">JavaScript</span></div><h3>Modern JavaScript (JS)</h3><p>Variables, DOM Manipulation, LocalStorage.</p><button class="btn" id="btn-c3" onclick="loadStudyMaterial('c3', 'Coding - Modern JavaScript')">View Page</button></div>
-            <div class="chapter-card" data-subject="python" data-search="python data structures loops coding"><div class="card-header-tags"><span class="tag tag-handwritten">Handwritten</span><span class="tag tag-subject">Python</span></div><h3>Python Core Concepts</h3><p>Syntax rules, Loops, Lists, Functions.</p><button class="btn" id="btn-c4" onclick="loadStudyMaterial('c4', 'Coding - Python Core')">View Page</button></div>
+        <div class="chapter-content">
+            <h3>1. Chemical Equation (रासायनिक समीकरण):</h3>
+            <p>Kisi chemical reaction ko symbols aur formulas ke roop mein likhna chemical equation kehlata hai.</p>
+            <div class="formula">Example: 2Mg + O₂ → 2MgO (Magnesium Oxide)</div>
+            <h3>2. Types of Reactions:</h3>
+            <ul>
+                <li><b>Combination Reaction:</b> Do ya do se zyada reactants milkar ek single product banate hain.</li>
+                <li><b>Decomposition Reaction:</b> Ek single reactant tootkar do ya do se zyada products banata hai.</li>
+            </ul>
         </div>
     </div>
-    <div id="no-results">Oops! Ye subject/chapter matches hamari database mein nahi mile.</div>
+
+    <!-- Chapter 2 -->
+    <div class="chapter-box">
+        <div class="chapter-title" onclick="toggleChapter(this)">
+            <span>Ch 2: Acids, Bases and Salts</span>
+            <span class="toggle-icon"></span>
+        </div>
+        <div class="chapter-content">
+            <h3>1. Acids (अम्ल):</h3>
+            <p>Swaad mein khatte hote hain aur Blue litmus ko Red kar dete hain. Ye H⁺ ions dete hain.</p>
+            <h3>2. Bases (क्षारक):</h3>
+            <p>Swaad mein kadwe hote hain aur Red litmus ko Blue kar dete hain. Ye OH⁻ ions dete hain.</p>
+            <h3>3. pH Scale:</h3>
+            <p>Acidic solutions ka pH 7 se kam hota hai, aur Basic solutions ka pH 7 se zyada hota hai. Pure water ka pH 7 hota hai.</p>
+        </div>
+    </div>
+
+    <!-- Chapter 3 -->
+    <div class="chapter-box">
+        <div class="chapter-title" onclick="toggleChapter(this)">
+            <span>Ch 3: Metals and Non-metals</span>
+            <span class="toggle-icon"></span>
+        </div>
+        <div class="chapter-content">
+            <h3>1. Properties of Metals:</h3>
+            <p>Metals chamakdar (lustrous), peetkar chadar banane layak (malleable), aur taar khinchne layak (ductile) hote hain. Ye electricity ke acche conductors hain.</p>
+            <h3>2. Reactivity Series:</h3>
+            <p>Metals ko unki reactivity ke ghatte kram mein rakhna. Potassium (K) sabse zyada reactive hai aur Gold (Au) sabse kam.</p>
+        </div>
+    </div>
+
+    <!-- Chapter 4 -->
+    <div class="chapter-box">
+        <div class="chapter-title" onclick="toggleChapter(this)">
+            <span>Ch 4: Carbon and its Compounds</span>
+            <span class="toggle-icon"></span>
+        </div>
+        <div class="chapter-content">
+            <h3>1. Covalent Bond (सहसंयोजी आबंध):</h3>
+            <p>Carbon hamesha electrons ki sharing karke bond banata hai, jise covalent bond kehte hain.</p>
+            <h3>2. Hydrocarbons:</h3>
+            <ul>
+                <li><b>Saturated (Alkane):</b> Single bond wale carbon compounds (CₙH₂ₙ₊₂).</li>
+                <li><b>Unsaturated (Alkene/Alkyne):</b> Double ya triple bond wale compounds.</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Chapter 5 -->
+    <div class="chapter-box">
+        <div class="chapter-title" onclick="toggleChapter(this)">
+            <span>Ch 5: Life Processes (जैव प्रक्रम)</span>
+            <span class="toggle-icon"></span>
+        </div>
+        <div class="chapter-content">
+            <h3>1. Nutrition (पोषण):</h3>
+            <p>Autotrophic nutrition (plants jo apna khana khud banate hain) aur Heterotrophic nutrition (animals jo doosro par nirbhar hain).</p>
+            <h3>2. Respiration (श्वसन):</h3>
+            <p>Glucose ka tootkar energy (ATP) banana. Ye Oxygen ki presence (Aerobic) aur absence (Anaerobic) dono mein ho sakta hai.</p>
+        </div>
+    </div>
+
 </div>
-<div id="study-modal" class="modal"><div class="modal-content"><span class="close-btn" onclick="closeStudyMaterial()">&times;</span><div id="modal-render-area"></div></div></div>
+
 <script>
-    const notesVault = {
-        m1: `<h2>Maths Ch 1: Real Numbers (वास्तविक संख्याएं)</h2><h3>1. Theorem:</h3><p>HCF $\times$ LCM = $a \times b$</p>`,
-        m2: `<h2>Maths Ch 2: Polynomials (बहुपद)</h2><p>Sum of Zeroes: $\alpha + \beta = -b/a$ <br> Product: $\alpha \cdot \beta = c/a$</p>`,
-        m3: `<h2>Maths Ch 3: Linear Equations</h2><p>Unique Solution condition: $a_1/a_2 \neq b_1/b_2$</p>`,
-        m4: `<h2>Maths Ch 4: Quadratic Equations</h2><p>Discriminant ($D$) = $b^2 - 4ac$. Formula: $x = \frac{-b \pm \sqrt{D}}{2a}$</p>`,
-        m5: `<h2>Maths Ch 5: AP</h2><p>$a_n = a + (n-1)d$ | $S_n = \frac{n}{2}[2a + (n-1)d]$</p>`,
-        m6: `<h2>Maths Ch 6: Triangles</h2><p>Thales Theorem (BPT): If lines are parallel, ratios of intercept sides are equal.</p>`,
-        m7: `<h2>Maths Ch 7: Coordinate Geometry</h2><p>Distance Formula: $d = \sqrt{(x_2-x_1)^2 + (y_2-y_1)^2}$</p>`,
-        m8: `<h2>Maths Ch 8: Trigonometry</h2><p>$\sin^2\theta + \cos^2\theta = 1$ | $\tan\theta = P/B$</p>`,
-        m9: `<h2>Maths Ch 9: Applications of Trigonometry</h2><p>Angle of elevation vs depression solutions via right angle triangles.</p>`,
-        m10: `<h2>Maths Ch 10: Circles</h2><p>External point se circle par khiche gaye dono tangents ki lambai barabar hoti hai.</p>`,
-        m11: `<h2>Maths Ch 11: Constructions</h2><p>Line segments division and external tangent circle architecture blueprints.</p>`,
-        m12: `<h2>Maths Ch 12: Areas Related to Circles</h2><p>Area of Sector = $\frac{\theta}{360^\circ} \times \pi r^2$</p>`,
-        m13: `<h2>Maths Ch 13: Surface Areas and Volumes</h2><p>Cone volume = $\frac{1}{3}\pi r^2h$ | Cylinder volume = $\pi r^2h$</p>`,
-        m14: `<h2>Maths Ch 14: Statistics</h2><p>Mean ($\bar{x}$) = $\frac{\sum f_ix_i}{\sum f_i}$</p>`,
-        m15: `<h2>Maths Ch 15: Probability</h2><p>$P(E) = \frac{\text{Favorable outcomes}}{\text{Total outcomes}}$. Value matches range $0 \le P(E) \le 1$.</p>`,
-        s1: `<h2>Science Ch 1: Chemical Reactions</h2><p>Combination, Decomposition and Displacement reactions templates.</p>`,
-        s2: `<h2>Science Ch 2: Acids, Bases and Salts</h2><p>Acids (H⁺), Bases (OH⁻). pH scale: 7 Neutral.</p>`,
-        s3: `<h2>Science Ch 3: Metals and Non-metals</h2><p>Amphoteric oxides (Al₂O₃) show both acid and base actions.</p>`,
-        s4: `<h2>Science Ch 4: Carbon and its Compounds</h2><p>Covalent bonds sharing systems. Hydrocarbons architecture charts.</p>`,
-        s5: `<h2>Science Ch 5: Life Processes</h2><p>Photosynthesis mechanisms and Human Nephrons waste excretion layouts.</p>`,
-        s6: `<h2>Science Ch 6: Control and Coordination</h2><p>Reflex actions managed directly by Spinal Cord network.</p>`,
-        s7: `<h2>Science Ch 7: How do Organisms Reproduce?</h2><p>Asexual fission tracks vs Sexual zygote structural paths.</p>`,
-        s8: `<h2>Science Ch 8: Heredity</h2><p>Sex chromosomes determination criteria (Father setup XY governs gender).</p>`,
-        s9: `<h2>Science Ch 9: Light</h2><p>Mirror setup formula: $1/f = 1/v + 1/u$</p>`,
-        s10: `<h2>Science Ch 10: Human Eye</h2><p>Myopia correction demands Concave lens layout panels.</p>`,
-        s11: `<h2>Science Ch 11: Electricity</h2><p>Ohm Law: $V = IR$ | Resistance Series: $R = R_1 + R_2 + R_3$</p>`,
-        s12: `<h2>Science Ch 12: Magnetic Effects</h2><p>Magnetic field lines travel from North to South. They never intersect.</p>`,
-        s13: `<h2>Science Ch 13: Our Environment</h2><p>Energy flow follows 10% transfer rule across trophic levels.</p>`,
-        c1: `<h2>HTML5 Course Notes: Full Core Material</h2><h3>1. HTML Kya Hai?</h3><p>HTML ka full form HyperText Markup Language hai. Yeh kisi bhi website ka basic skeleton (dhancha) banane ke kaam aata hai.</p><h3>2. Important Tags Aur Unka Use:</h3><ul><li><b>&lt;h1&gt;:</b> Headings ke liye use hote hain.</li><li><b>&lt;p&gt;:</b> Paragraphs likhne ke liye use kiya jata hai.</li></ul><h3>3. Basic HTML5 Structure (Boilerplate):</h3><div class="formula-box">&lt;!DOCTYPE html&gt;\n&lt;html&gt;\n&lt;head&gt;\n  &lt;title&gt;My Page&lt;/title&gt;\n&lt;/head&gt;\n&lt;body&gt;\n  &lt;h1&gt;Welcome to Coding!&lt;/h1&gt;\n&lt;/body&gt;\n&lt;/html&gt;</div>`,
-        c2: `<h2>CSS3 Course Notes: Full Styling & Layouts</h2><h3>1. CSS Kya Hai?</h3><p>CSS ka full form Cascading Style Sheets hai. Iska kaam HTML se bani website ko sundar rang, margins, aur clean layouts dena hai.</p><h3>2. Flexbox Layout Model:</h3><p>Website ke items ko ek line mein barabar arrange karne ke liye flexbox sabse modern tool hai.</p><div class="formula-box">.parent-container {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n}</div>`,
-        c3: `<h2>Modern JavaScript Course Notes: Website Functionality</h2><h3>1. JavaScript (JS) Kya Hai?</h3><p>JS ek scripting language hai jo boring aur shaant HTML website ko dynamic banati hai.</p><h3>2. LocalStorage Technology:</h3><p>Bina database ke user ka data browser ki memory mein permanently save rakhne ke liye use hota hai.</p><div class="formula-box">localStorage.setItem('username', 'Rahul');\nlet data = localStorage.getItem('username');</div>`,
-        c4: `<h2>Core Python Course Notes: Programming Logic</h2><h3>1. Python Intro:</h3><p>Python ek bahut hi aasan aur human-readable programming language hai.</p><h3>2. Loops Architecture:</h3><p>Kisi kaam ko baar-baar repeat karne ke liye loops use hote hain.</p><div class="formula-box"># 1 se 5 tak ginti print karna\nfor i in range(1, 6):\n    print("Number:", i)</div>`
-    };
-
-    let activeMainTab = 'class10';
-    let activeClass10SubFilter = 'all';
-    let activeCodingSubFilter = 'all';
-
-    window.onload = function() {
-        let savedUser = localStorage.getItem('notes_app_user');
-        if (!savedUser) { document.getElementById('auth-modal').style.display = 'flex'; }
-        else { initializeDashboard(savedUser); }
-    };
-
-    function handleSignup() {
-        let name = document.getElementById('username-input').value.trim();
-        let pass = document.getElementById('password-input').value.trim();
-        if(name === "" || pass === "") { alert("Fill all entries!"); return; }
-        localStorage.setItem('notes_app_user', name);
-        document.getElementById('auth-modal').style.display = 'none';
-        initializeDashboard(name);
-    }
-
-    function initializeDashboard(username) {
-        document.getElementById('welcome-title').innerHTML = `"Download free hand written notes" - Welcome, ${username}!`;
-        renderHistoryLabels();
-    }
-
-    function clearOldNotesHistory() {
-        localStorage.removeItem('recent_studying_key');
-        localStorage.removeItem('recent_studying_name');
-        alert("Purani read history successfully clear ho gayi hai!");
-        renderHistoryLabels(); 
-    }
-
-    function switchMainTab(targetTab) {
-        activeMainTab = targetTab;
-        document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-        document.querySelectorAll('.content-panel').forEach(panel => panel.classList.remove('active'));
-        if(targetTab === 'class10') {
-            document.querySelectorAll('.tab-btn')[0].classList.add('active');
-            document.getElementById('panel-class10').classList.add('active');
-        } else {
-            document.querySelectorAll('.tab-btn')[1].classList.add('active');
-            document.getElementById('panel-coding').classList.add('active');
-        }
-        executeSearch();
-    }
-
-    function filterSubject(subject, section) {
-        if(section === '10') {
-            activeClass10SubFilter = subject;
-            document.querySelectorAll('#panel-class10 .sub-filter-btn').forEach(b => b.classList.remove('active'));
-            if(subject==='all') document.getElementById('btn-sub-all10').classList.add('active');
-            if(subject==='math') document.getElementById('btn-sub-math').classList.add('active');
-            if(subject==='science') document.getElementById('btn-sub-science').classList.add('active');
-        } else {
-            activeCodingSubFilter = subject;
-            document.querySelectorAll('#panel-coding .sub-filter-btn').forEach(b => b.classList.remove('active'));
-            if(subject==='all') document.getElementById('btn-sub-allcoding').classList.add('active');
-            if(subject==='html') document.getElementById('btn-sub-html').classList.add('active');
-            if(subject==='css') document.getElementById('btn-sub-css').classList.add('active');
-            if(subject==='js') document.getElementById('btn-sub-js').classList.add('active');
-            if(subject==='python') document.getElementById('btn-sub-python').classList.add('active');
-        }
-        executeSearch();
-    }
-
-    function executeSearch() {
-        let input = document.getElementById('master-search').value.toLowerCase().trim();
-        let clearX = document.getElementById('clear-search-x');
-        clearX.style.display = input.length > 0 ? "flex" : "none";
-        let currentGridId = activeMainTab === 'class10' ? 'grid-class10' : 'grid-coding';
-        let currentSubFilter = activeMainTab === 'class10' ? activeClass10SubFilter : activeCodingSubFilter;
-        let cards = document.getElementById(currentGridId).getElementsByClassName('chapter-card');
-        let totalVisible = 0;
-        for (let i = 0; i < cards.length; i++) {
-            let cardSubject = cards[i].getAttribute('data-subject');
-            let searchMeta = cards[i].getAttribute('data-search');
-            let matchesFilter = (currentSubFilter === 'all' || cardSubject === currentSubFilter);
-            let matchesSearch = (searchMeta.includes(input));
-            if(matchesFilter && matchesSearch) { cards[i].style.display = "flex"; totalVisible++; }
-            else { cards[i].style.display = "none"; }
-        }
-        document.getElementById('no-results').style.display = totalVisible === 0 ? "block" : "none";
-    }
-
-    function clearSearchBar() { document.getElementById('master-search').value = ""; executeSearch(); }
-
-    function loadStudyMaterial(key, name) {
-        localStorage.setItem('recent_studying_key', key);
-        localStorage.setItem('recent_studying_name', name);
-        document.getElementById('modal-render-area').innerHTML = notesVault[key];
-        document.getElementById('study-modal').style.display = "block";
-        renderHistoryLabels();
-    }
-
-    function closeStudyMaterial() { document.getElementById('study-modal').style.display = "none"; }
-
-    function renderHistoryLabels() {
-        let lastKey = localStorage.getItem('recent_studying_key');
-        let lastName = localStorage.getItem('recent_studying_name');
-        let deleteBtn = document.getElementById('delete-bar-btn');
-        document.querySelectorAll('.btn').forEach(btn => btn.classList.remove('btn-last-read'));
-        if (lastKey && lastName) {
-            let tracker = document.getElementById('last-read-tracker');
-            tracker.innerHTML = `📚 Last Viewed Course: ${lastName}`;
-            tracker.style.display = "block";
-            if(deleteBtn) deleteBtn.style.display = "block"; 
-            let TargetBtn = document.getElementById('btn-' + lastKey);
-            if(TargetBtn) TargetBtn.classList.add('btn-last-read');
-        } else {
-            document.getElementById('last-read-tracker').style.display = "none";
-            if(deleteBtn) deleteBtn.style.display = "none"; 
-        }
+    function toggleChapter(element) {
+        element.parentElement.classList.toggle('open');
     }
 </script>
 </body>
